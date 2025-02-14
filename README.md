@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://almunir.netlify.app" target="_blank">
+  <a href="https://almunir.site" target="_blank">
     <img src="./assets/imgs/Al-Munir-ORG.png" alt="Logo" width="400">
   </a>
 </p>
