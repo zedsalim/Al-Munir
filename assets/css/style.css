@@ -2,8 +2,7 @@
    Imports / Fonts
 ====================================== */
 @import url("https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
-/* @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
 
 /* ======================================
    CSS Variables
@@ -11,7 +10,7 @@
 :root {
   /* Fonts */
   --font-quran: "Amiri Quran", serif;
-  --font-arabic: "DM Sans", serif;
+  --font-arabic: "Tajawal", serif;
 
   /* Font Sizes */
   --font-size-base: 22px;
