@@ -5,11 +5,11 @@
 </p>
 <hr/>
 <p align="center">
-  <a href="https://github.com/zedsalim/almunir/stargazers"><img src="https://img.shields.io/github/stars/zedsalim/almunir?style=social" alt="GitHub Stars"></a>
-  <a href="https://github.com/zedsalim/almunir/network/members"><img src="https://img.shields.io/github/forks/zedsalim/almunir?style=social" alt="GitHub Forks"></a>
-  <a href="https://github.com/zedsalim/almunir/watchers"><img src="https://img.shields.io/github/watchers/zedsalim/almunir?style=social" alt="GitHub Watchers"></a>
-  <a href="https://github.com/zedsalim/almunir"><img src="https://img.shields.io/github/repo-size/zedsalim/almunir" alt="Repository Size"></a>
-  <a href="https://github.com/zedsalim/almunir"><img src="https://img.shields.io/github/last-commit/zedsalim/almunir" alt="Last Commit"></a>
+  <a href="https://github.com/zedsalim/Al-Munir/stargazers"><img src="https://img.shields.io/github/stars/zedsalim/Al-Munir?style=social" alt="GitHub Stars"></a>
+  <a href="https://github.com/zedsalim/Al-Munir/network/members"><img src="https://img.shields.io/github/forks/zedsalim/Al-Munir?style=social" alt="GitHub Forks"></a>
+  <a href="https://github.com/zedsalim/Al-Munir/watchers"><img src="https://img.shields.io/github/watchers/zedsalim/Al-Munir?style=social" alt="GitHub Watchers"></a>
+  <a href="https://github.com/zedsalim/Al-Munir"><img src="https://img.shields.io/github/repo-size/zedsalim/Al-Munir" alt="Repository Size"></a>
+  <a href="https://github.com/zedsalim/Al-Munir"><img src="https://img.shields.io/github/last-commit/zedsalim/Al-Munir" alt="Last Commit"></a>
 </p>
 
 # موقع المنير | Al-Munir
