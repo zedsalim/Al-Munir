@@ -2,7 +2,8 @@
    Imports / Fonts
 ====================================== */
 @import url("https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"); */
 
 /* ======================================
    CSS Variables
@@ -10,7 +11,7 @@
 :root {
   /* Fonts */
   --font-quran: "Amiri Quran", serif;
-  --font-arabic: "Noto Naskh Arabic", serif;
+  --font-arabic: "DM Sans", serif;
 
   /* Font Sizes */
   --font-size-base: 22px;
@@ -29,6 +30,7 @@
   --edition-label-color: #888;
   --verse-bg: #f9f9f9;
   --active-color: #4f9b91;
+  --active-color-hover: #67c4b7;
 
   /* Spacing */
   --padding-body: 20px;
@@ -66,7 +68,6 @@ button {
   font-family: var(--font-arabic);
   font-size: var(--font-size-base);
   direction: rtl;
-  text-align: right;
   overflow-wrap: break-word;
   cursor: pointer;
 }
@@ -83,6 +84,10 @@ button {
 /* Indicates an active state for toggled elements */
 .active {
   background: var(--active-color);
+}
+
+.active:hover {
+  background: var(--active-color-hover);
 }
 
 /* ======================================
@@ -134,7 +139,8 @@ select option {
 
 /* Button styling */
 button {
-  padding: 2px 12px;
+  padding: 8px 12px;
+  text-align: center;
   border: none;
   border-radius: 4px;
   background: var(--primary-color);
@@ -257,43 +263,26 @@ audio {
   padding: 4px;
 }
 
-/* ======================================
+/* Site Description Styles */
+.site-description {
+  direction: rtl;
+  font-family: var(--font-arabic);
+  font-size: var(--font-size-base);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.site-description p {
+  margin-bottom: 10px;
+  font-size: 1.6em;
+}
+
+/* 
+======================================
    Responsive Design
 ====================================== */
 
-/* Tablet Devices */
 @media (max-width: 768px) {
-  :root {
-    --font-size-base: 20px;
-    --quran-font-size: 34px;
-    --translation-font-size: 24px;
-  }
-
-  body {
-    padding: 15px;
-  }
-
-  .container {
-    padding: 15px;
-  }
-
-  .controls,
-  .playback-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  select {
-    min-width: 120px;
-  }
-
-  audio {
-    width: 100%;
-  }
-}
-
-/* Mobile Devices */
-@media (max-width: 480px) {
   :root {
     --font-size-base: 18px;
     --quran-font-size: 30px;
@@ -301,16 +290,18 @@ audio {
   }
 
   body {
-    padding: 10px;
+    padding: 0px;
   }
 
   .container {
     padding: 10px;
+    border-radius: 0px;
   }
 
   .controls,
   .playback-controls {
     flex-direction: column;
+    align-items: stretch;
     gap: 10px;
   }
 
@@ -324,5 +315,10 @@ audio {
 
   audio {
     width: 100%;
+  }
+
+  .site-description p {
+    margin-bottom: 10px;
+    font-size: 1.5em;
   }
 }

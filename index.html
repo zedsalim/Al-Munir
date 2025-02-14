@@ -3,11 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="الاستماع وقراءة القرآن الكريم مع التفسير لتسهيل الحفظ والفهم والمراجعة"
+    />
+    <meta name="keywords" content="Quran, حفط, قرأن, تفسير, إستماع" />
     <title>المنير | Al-Munir</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/dialog.min.css" />
   </head>
   <body>
     <div class="container">
+      <div class="site-description">
+        <p>
+          مرحباً بكم في موقع المنير، حيث يمكنكم الاستماع وقراءة القرآن الكريم مع
+          التفسير لتسهيل الحفظ والفهم والمراجعة.
+        </p>
+        <button class="openDialogBtn" data-target="dialogVideo">
+          كيفية الاستخدام
+        </button>
+      </div>
+
       <div class="controls">
         <select id="surahSelect">
           <option value="selectSurah">إختر سورة</option>
@@ -55,6 +71,44 @@
         </div>
       </div>
     </div>
-    <script src="./script.js"></script>
+
+    <!-- Video Tutorial Dialog -->
+    <div id="dialogVideo" class="dialog">
+      <div class="dialog-content">
+        <button class="dialog-close">
+          <svg
+            version="1.1"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 122.88 122.88"
+            style="enable-background: new 0 0 122.88 122.88"
+            xml:space="preserve"
+          >
+            <style type="text/css">
+              .st0 {
+                fill-rule: evenodd;
+                clip-rule: evenodd;
+              }
+            </style>
+            <g>
+              <path
+                class="st0"
+                d="M1.63,97.99l36.55-36.55L1.63,24.89c-2.17-2.17-2.17-5.73,0-7.9L16.99,1.63c2.17-2.17,5.73-2.17,7.9,0 l36.55,36.55L97.99,1.63c2.17-2.17,5.73-2.17,7.9,0l15.36,15.36c2.17,2.17,2.17,5.73,0,7.9L84.7,61.44l36.55,36.55 c2.17,2.17,2.17,5.73,0,7.9l-15.36,15.36c-2.17,2.17-5.73,2.17-7.9,0L61.44,84.7l-36.55,36.55c-2.17,2.17-5.73,2.17-7.9,0 L1.63,105.89C-0.54,103.72-0.54,100.16,1.63,97.99L1.63,97.99z"
+              />
+            </g>
+          </svg>
+        </button>
+        <video controls>
+          <source src="./assets/data/tutorial.mp4" type="video/mp4" />
+          متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+      </div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/dialog.min.js"></script>
   </body>
 </html>
