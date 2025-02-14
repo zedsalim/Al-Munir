@@ -1,4 +1,4 @@
-const API_BASE = "http://api.alquran.cloud/v1";
+const API_BASE = "https://api.alquran.cloud/v1";
 let currentSurah = "selectSurah";
 let currentAyah = null;
 let currentEdition = "selectTafsir";
