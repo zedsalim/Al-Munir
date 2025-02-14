@@ -111,6 +111,10 @@ button {
   flex-wrap: wrap;
 }
 
+.logo {
+  width: 250px;
+}
+
 /* Styling for dropdown selects */
 select {
   padding: 8px;
@@ -302,6 +306,10 @@ audio {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
+  }
+
+  .logo {
+    width: 180px;
   }
 
   select {
