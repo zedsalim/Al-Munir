@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>المنير | Al-Munir</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="controls">
+        <select id="surahSelect">
+          <option value="selectSurah">إختر سورة</option>
+        </select>
+        <select id="editionSelect">
+          <option value="selectTafsir">إختر تفسير</option>
+        </select>
+        <select id="audioEditionSelect">
+          <option value="selectAudio">إختر القارئ</option>
+        </select>
+      </div>
+
+      <div class="playback-controls">
+        <button id="toggleAutoplay">التشغيل التلقائي للأيات: Off</button>
+        <button id="toggleLoop">تكرار الأية الحالية: Off</button>
+        <button id="toggleRangeMode">تحديد مجال الأيات: Off</button>
+      </div>
+      <div class="audio-controls">
+        <audio id="quranAudio" controls></audio>
+        <button id="prevAyah">الأية السابقة</button>
+        <button id="nextAyah">الأية التالية</button>
+      </div>
+
+      <div id="rangeControls" class="range-controls" style="display: none">
+        <label>من الأية:</label>
+        <input type="number" id="rangeStart" min="1" value="1" />
+        <label>إلى الأية:</label>
+        <input type="number" id="rangeEnd" min="1" value="1" />
+        <button id="setRange">تطبيق</button>
+      </div>
+
+      <div id="loading" class="loading" style="display: none">
+        ... تحميل البيانات
+      </div>
+      <div id="error" class="error" style="display: none"></div>
+
+      <div id="quranContent">
+        <div class="meta-info">
+          <div id="surahInfo"></div>
+          <div id="ayahInfo"></div>
+        </div>
+        <div id="quranText" class="quran-text">
+          <div id="arabicText" class="arabic"></div>
+          <div id="translationText" class="translation"></div>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,328 @@
+/* ======================================
+   Imports / Fonts
+====================================== */
+@import url("https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap");
+
+/* ======================================
+   CSS Variables
+====================================== */
+:root {
+  /* Fonts */
+  --font-quran: "Amiri Quran", serif;
+  --font-arabic: "Noto Naskh Arabic", serif;
+
+  /* Font Sizes */
+  --font-size-base: 22px;
+  --quran-font-size: 38px;
+  --translation-font-size: 28px;
+
+  /* Colors */
+  --bg-body: #f0f0f0;
+  --bg-container: #ffffff;
+  --border-color: #ddd;
+  --primary-color: #395364;
+  --primary-hover: #4e738a;
+  --disabled-color: #cccccc;
+  --playback-bg: #f5f5f5;
+  --text-color: #666;
+  --edition-label-color: #888;
+  --verse-bg: #f9f9f9;
+  --active-color: #4f9b91;
+
+  /* Spacing */
+  --padding-body: 20px;
+  --padding-container: 20px;
+  --border-radius-container: 10px;
+  --box-shadow-container: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ======================================
+   Global Styles / Reset
+====================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ======================================
+   Base Typography
+====================================== */
+body {
+  font-family: var(--font-quran);
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.6;
+  padding: var(--padding-body);
+  background-color: var(--bg-body);
+}
+
+/* Apply Arabic font to form elements */
+select,
+option,
+label,
+button {
+  font-family: var(--font-arabic);
+  font-size: var(--font-size-base);
+  direction: rtl;
+  text-align: right;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+/* ======================================
+   Utility Classes
+====================================== */
+
+/* Hides an element regardless of its display value */
+.hidden {
+  display: none !important;
+}
+
+/* Indicates an active state for toggled elements */
+.active {
+  background: var(--active-color);
+}
+
+/* ======================================
+   Layout & Components
+====================================== */
+
+/* Container for the entire application */
+.container {
+  margin: 0 auto;
+  background: var(--bg-container);
+  padding: var(--padding-container);
+  border-radius: var(--border-radius-container);
+  box-shadow: var(--box-shadow-container);
+}
+
+/* Controls section (dropdowns, etc.) */
+.controls {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* Styling for dropdown selects */
+select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  flex: 1;
+  width: auto;
+  min-width: 150px;
+}
+
+/* Prevent text wrapping in dropdown options */
+select option {
+  white-space: nowrap;
+}
+
+/* Audio controls container */
+.audio-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+/* Button styling */
+button {
+  padding: 2px 12px;
+  border: none;
+  border-radius: 4px;
+  background: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: var(--primary-hover);
+}
+
+button:disabled {
+  background: var(--disabled-color);
+  cursor: not-allowed;
+}
+
+/* Quran text display area */
+.quran-text {
+  text-align: center;
+  margin: 20px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Container for a single verse */
+.verse-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  background: var(--verse-bg);
+  border-radius: 8px;
+}
+
+/* Arabic text styling */
+.arabic {
+  font-size: var(--quran-font-size);
+  line-height: 2;
+  direction: rtl;
+  padding: 15px 10px;
+  background: var(--bg-container);
+  border-radius: 4px;
+}
+
+/* Translation text styling */
+.translation {
+  font-size: var(--translation-font-size);
+  color: var(--text-color);
+  padding: 10px;
+  background: var(--bg-container);
+  border-radius: 4px;
+  line-height: 1.6;
+}
+
+/* Edition label (e.g., for translation edition) */
+.edition-label {
+  font-size: 0.9em;
+  color: var(--edition-label-color);
+  margin-bottom: 5px;
+}
+
+/* Loading indicator styling */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-color);
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Meta information display (e.g., surah and ayah info) */
+.meta-info {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+/* Audio element styling */
+audio {
+  width: 60%;
+}
+
+/* Playback controls container */
+.playback-controls {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 15px;
+  background: var(--playback-bg);
+  border-radius: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Range selection controls */
+.range-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: var(--playback-bg);
+  border-radius: 4px;
+  direction: rtl;
+}
+
+/* Input fields within range controls */
+.range-controls input {
+  width: 60px;
+  padding: 4px;
+}
+
+/* ======================================
+   Responsive Design
+====================================== */
+
+/* Tablet Devices */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 20px;
+    --quran-font-size: 34px;
+    --translation-font-size: 24px;
+  }
+
+  body {
+    padding: 15px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .controls,
+  .playback-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  select {
+    min-width: 120px;
+  }
+
+  audio {
+    width: 100%;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+  :root {
+    --font-size-base: 18px;
+    --quran-font-size: 30px;
+    --translation-font-size: 20px;
+  }
+
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .controls,
+  .playback-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  select {
+    width: 100%;
+  }
+
+  button {
+    padding: 8px;
+  }
+
+  audio {
+    width: 100%;
+  }
+}
