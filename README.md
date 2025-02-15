@@ -8,7 +8,6 @@
   <a href="https://github.com/zedsalim/Al-Munir/stargazers"><img src="https://img.shields.io/github/stars/zedsalim/Al-Munir?style=social" alt="GitHub Stars"></a>
   <a href="https://github.com/zedsalim/Al-Munir/network/members"><img src="https://img.shields.io/github/forks/zedsalim/Al-Munir?style=social" alt="GitHub Forks"></a>
   <a href="https://github.com/zedsalim/Al-Munir/watchers"><img src="https://img.shields.io/github/watchers/zedsalim/Al-Munir?style=social" alt="GitHub Watchers"></a>
-  <a href="https://github.com/zedsalim/Al-Munir"><img src="https://img.shields.io/github/repo-size/zedsalim/Al-Munir" alt="Repository Size"></a>
   <a href="https://github.com/zedsalim/Al-Munir"><img src="https://img.shields.io/github/last-commit/zedsalim/Al-Munir" alt="Last Commit"></a>
 </p>
 
