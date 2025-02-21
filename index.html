@@ -10,8 +10,15 @@
     />
     <meta name="keywords" content="Quran, حفط, قرأن, تفسير, إستماع" />
     <title>المنير | Al-Munir - تحفيظ القرآن الكريم</title>
+    <!-- <link rel="stylesheet" href="./assets/css/style.css" /> -->
     <link rel="stylesheet" href="./assets/css/style.min.css" />
     <link rel="stylesheet" href="./assets/css/dialog.min.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <!-- Google tag (gtag.js) -->
     <script
       async
@@ -71,8 +78,9 @@
         <button id="setRange">تطبيق</button>
       </div>
 
-      <div id="loading" class="loading" style="display: none">
-        ... تحميل البيانات
+      <div id="loading" class="loader-container" style="display: none">
+        <div class="loader"></div>
+        جاري تحميل البيانات ...
       </div>
       <div id="error" class="error" style="display: none"></div>
 
@@ -124,6 +132,7 @@
       </div>
     </div>
 
+    <!-- <script src="./assets/js/script_api.js"></script> -->
     <script src="./assets/js/script.min.js"></script>
     <script src="./assets/js/dialog.min.js"></script>
   </body>

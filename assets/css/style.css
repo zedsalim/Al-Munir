@@ -210,10 +210,41 @@ button:disabled {
 }
 
 /* Loading indicator styling */
-.loading {
+.loader-container {
+  direction: rtl;
   text-align: center;
   padding: 20px;
   color: var(--text-color);
+}
+.loader {
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 10px solid var(--playback-bg);
+  border-radius: 50%;
+  border-top: 10px solid var(--primary-color);
+  width: 65px;
+  height: 65px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Error message styling */
