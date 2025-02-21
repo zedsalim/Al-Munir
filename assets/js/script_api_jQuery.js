@@ -119,43 +119,6 @@ async function fetchApi(endpoint) {
 }
 
 /**
- * Load specific text and audio editions based on the allowed identifiers.
- */
-async function loadEditions() {
-  showLoading(true);
-  try {
-    const [textEditions, audioEditions] = await Promise.all([
-      fetchApi("/edition?format=text"),
-      fetchApi("/edition?format=audio&type=versebyverse"),
-    ]);
-
-    // Filter and add text editions by allowed identifiers
-    $.each(textEditions.data, function (i, edition) {
-      if (
-        allowedIdentifiers.text.includes(edition.identifier) &&
-        edition.identifier !== "quran-uthmani"
-      ) {
-        elements.editionSelect.append(
-          $("<option>").val(edition.identifier).text(edition.name)
-        );
-      }
-    });
-
-    // Filter and add audio editions by allowed identifiers
-    $.each(audioEditions.data, function (i, edition) {
-      if (allowedIdentifiers.audio.includes(edition.identifier)) {
-        elements.audioEditionSelect.append(
-          $("<option>").val(edition.identifier).text(edition.name)
-        );
-      }
-    });
-  } catch (error) {
-    showError("فشل في تحميل البيانات");
-  }
-  showLoading(false);
-}
-
-/**
  * Load the list of surahs from the API.
  */
 async function loadSurahs() {
@@ -171,6 +134,55 @@ async function loadSurahs() {
     });
   } catch (error) {
     showError("فشل في تحميل السورة");
+  }
+  showLoading(false);
+}
+
+/**
+ * Load text editions based on the allowed identifiers.
+ */
+async function loadTextEditions() {
+  showLoading(true);
+  try {
+    const textEditions = await fetchApi("/edition?format=text");
+
+    // Filter and add text editions by allowed identifiers
+    $.each(textEditions.data, function (i, edition) {
+      if (
+        allowedIdentifiers.text.includes(edition.identifier) &&
+        edition.identifier !== "quran-uthmani"
+      ) {
+        elements.editionSelect.append(
+          $("<option>").val(edition.identifier).text(edition.name)
+        );
+      }
+    });
+  } catch (error) {
+    showError("فشل في تحميل التفاسير");
+  }
+  showLoading(false);
+}
+
+/**
+ * Load audio editions based on the allowed identifiers.
+ */
+async function loadAudioEditions() {
+  showLoading(true);
+  try {
+    const audioEditions = await fetchApi(
+      "/edition?format=audio&type=versebyverse"
+    );
+
+    // Filter and add audio editions by allowed identifiers
+    $.each(audioEditions.data, function (i, edition) {
+      if (allowedIdentifiers.audio.includes(edition.identifier)) {
+        elements.audioEditionSelect.append(
+          $("<option>").val(edition.identifier).text(edition.name)
+        );
+      }
+    });
+  } catch (error) {
+    showError("فشل في تحميل التلاوات");
   }
   showLoading(false);
 }
@@ -523,7 +535,7 @@ function setupEventListeners() {
 async function init() {
   initializeHiddenElements();
   setupEventListeners();
-  await Promise.all([loadSurahs(), loadEditions()]);
+  await Promise.all([loadSurahs(), loadTextEditions(), loadAudioEditions()]);
   loadState();
 }
 
