@@ -198,28 +198,29 @@ async function loadAyah(
   ayahNumber,
   edition = state.currentEdition
 ) {
-  showLoading(true);
-  try {
-    // Fetch original Arabic text.
-    const arabicResponse = await fetchApi(
-      `/ayah/${surahNumber}:${ayahNumber}/quran-uthmani`
-    );
-    const arabicAyah = arabicResponse.data;
-    const arabicAyahText = arabicAyah.text;
-
-    // Fetch translation if applicable.
-    let translationText = "";
-    let translationEdition = "";
-    if (edition && edition !== "selectTafsir") {
-      const translationResponse = await fetchApi(
-        `/ayah/${surahNumber}:${ayahNumber}/${edition}`
+  if (state.currentSurah && state.currentSurah !== "selectSurah") {
+    showLoading(true);
+    try {
+      // Fetch original Arabic text.
+      const arabicResponse = await fetchApi(
+        `/ayah/${surahNumber}:${ayahNumber}/quran-uthmani`
       );
-      translationText = translationResponse.data.text;
-      translationEdition = translationResponse.data.edition.name;
-    }
+      const arabicAyah = arabicResponse.data;
+      const arabicAyahText = arabicAyah.text;
 
-    // Update the display.
-    elements.arabicText.html(`
+      // Fetch translation if applicable.
+      let translationText = "";
+      let translationEdition = "";
+      if (edition && edition !== "selectTafsir") {
+        const translationResponse = await fetchApi(
+          `/ayah/${surahNumber}:${ayahNumber}/${edition}`
+        );
+        translationText = translationResponse.data.text;
+        translationEdition = translationResponse.data.edition.name;
+      }
+
+      // Update the display.
+      elements.arabicText.html(`
       <div class="verse-container">
         <div class="arabic">${arabicAyahText}</div>
         ${
@@ -231,46 +232,64 @@ async function loadAyah(
       </div>
     `);
 
-    elements.surahInfo.text(
-      `Surah ${arabicAyah.surah.englishName} (${arabicAyah.surah.name})`
-    );
-    elements.ayahInfo.text(
-      `الأية ${arabicAyah.numberInSurah} من ${arabicAyah.surah.numberOfAyahs}`
-    );
-
-    state.totalAyahs = arabicAyah.surah.numberOfAyahs;
-
-    // Remove any existing handlers to prevent duplicates
-    elements.rangeStart.off("input").on("input", validateRangeInput);
-    elements.rangeEnd.off("input").on("input", validateRangeInput);
-
-    // Load audio if an audio edition is selected.
-    if (
-      state.currentAudioEdition &&
-      state.currentAudioEdition !== "selectAudio"
-    ) {
-      const audioResponse = await fetchApi(
-        `/ayah/${surahNumber}:${ayahNumber}/${state.currentAudioEdition}`
+      elements.surahInfo.text(
+        `Surah ${arabicAyah.surah.englishName} (${arabicAyah.surah.name})`
       );
-      elements.quranAudio.attr("src", audioResponse.data.audio);
-      if (state.autoplayEnabled) {
-        elements.quranAudio[0].play();
+      elements.ayahInfo.text(
+        `الأية ${arabicAyah.numberInSurah} من ${arabicAyah.surah.numberOfAyahs}`
+      );
+
+      state.totalAyahs = arabicAyah.surah.numberOfAyahs;
+
+      elements.rangeStart.off("input").on("input", validateRangeInput);
+      elements.rangeEnd.off("input").on("input", validateRangeInput);
+
+      // Load audio if an audio edition is selected.
+      if (
+        state.currentAudioEdition &&
+        state.currentAudioEdition !== "selectAudio"
+      ) {
+        const audioResponse = await fetchApi(
+          `/ayah/${surahNumber}:${ayahNumber}/${state.currentAudioEdition}`
+        );
+        elements.quranAudio.attr("src", audioResponse.data.audio);
+        if (state.autoplayEnabled) {
+          elements.quranAudio[0].play();
+        }
       }
+
+      updateNavigationButtons(
+        arabicAyah.numberInSurah,
+        arabicAyah.surah.numberOfAyahs
+      );
+
+      // Update state and save.
+      state.currentSurah = surahNumber;
+      state.currentAyah = ayahNumber;
+      saveState();
+    } catch (error) {
+      showError("فشل في تحميل الأية");
     }
-
-    updateNavigationButtons(
-      arabicAyah.numberInSurah,
-      arabicAyah.surah.numberOfAyahs
-    );
-
-    // Update state and save.
-    state.currentSurah = surahNumber;
-    state.currentAyah = ayahNumber;
-    saveState();
-  } catch (error) {
-    showError("فشل في تحميل الأية");
+    showLoading(false);
   }
-  showLoading(false);
+}
+
+/**
+ * Toggles option selects based on Surah selection
+ */
+function toggleOptionsBasedOnSurah() {
+  const isSelected = state.currentSurah === "selectSurah";
+
+  elements.editionSelect.prop("disabled", isSelected);
+  elements.audioEditionSelect.prop("disabled", isSelected);
+
+  elements.editionSelect.css("cursor", isSelected ? "not-allowed" : "pointer");
+  elements.audioEditionSelect.css(
+    "cursor",
+    isSelected ? "not-allowed" : "pointer"
+  );
+
+  updateControlsVisibility();
 }
 
 /**
@@ -399,7 +418,7 @@ function loadState() {
       showError("فشل تحميل الحالة المحفوظة");
     }
   }
-  updateControlsVisibility();
+  toggleOptionsBasedOnSurah();
 }
 
 /**
@@ -506,8 +525,14 @@ function setupEventListeners() {
       state.currentSurah = parseInt(selectedValue);
       state.currentAyah = 1;
       loadAyah(state.currentSurah, state.currentAyah);
-      updateControlsVisibility();
+    } else {
+      state.currentSurah = "selectSurah";
+      state.currentAyah = null;
+      elements.quranAudio[0].pause();
+      elements.quranAudio[0].currentTime = 0;
     }
+    toggleOptionsBasedOnSurah();
+    saveState();
   });
 
   elements.editionSelect.on("change", function () {
@@ -515,7 +540,10 @@ function setupEventListeners() {
     if (selectedValue) {
       state.currentEdition = selectedValue;
       loadAyah(state.currentSurah, state.currentAyah);
+    } else {
+      state.currentEdition = "selectTafsir";
     }
+    saveState();
   });
 
   elements.audioEditionSelect.on("change", function () {
@@ -523,8 +551,11 @@ function setupEventListeners() {
     if (selectedValue) {
       state.currentAudioEdition = selectedValue;
       loadAyah(state.currentSurah, state.currentAyah);
-      updateControlsVisibility();
+    } else {
+      state.currentAudioEdition = "selectAudio";
     }
+    updateControlsVisibility();
+    saveState();
   });
 }
 
@@ -537,6 +568,7 @@ async function init() {
   setupEventListeners();
   await Promise.all([loadSurahs(), loadTextEditions(), loadAudioEditions()]);
   loadState();
+  toggleOptionsBasedOnSurah();
 }
 
 // jQuery document ready function
