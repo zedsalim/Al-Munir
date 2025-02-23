@@ -62,14 +62,18 @@
       </div>
 
       <div class="playback-controls">
-        <button id="toggleAutoplay">التشغيل التلقائي للأيات: Off</button>
-        <button id="toggleLoop">تكرار الأية الحالية: Off</button>
-        <button id="toggleRangeMode">تحديد مجال الأيات: Off</button>
+        <button id="toggleAutoplay" class="hidden">
+          التشغيل التلقائي للأيات: Off
+        </button>
+        <button id="toggleLoop" class="hidden">تكرار الأية الحالية: Off</button>
+        <button id="toggleRangeMode" class="hidden">
+          تحديد مجال الأيات: Off
+        </button>
       </div>
       <div class="audio-controls">
-        <audio id="quranAudio" controls></audio>
-        <button id="prevAyah">الأية السابقة</button>
-        <button id="nextAyah">الأية التالية</button>
+        <audio id="quranAudio" class="hidden" controls></audio>
+        <button id="prevAyah" class="hidden">الأية السابقة</button>
+        <button id="nextAyah" class="hidden">الأية التالية</button>
       </div>
 
       <div id="rangeControls" class="range-controls" style="display: none">
@@ -86,7 +90,7 @@
       </div>
       <div id="error" class="error" style="display: none"></div>
 
-      <div id="quranContent">
+      <div id="quranContent" class="hidden">
         <div class="meta-info">
           <div id="surahInfo"></div>
           <div id="ayahInfo"></div>

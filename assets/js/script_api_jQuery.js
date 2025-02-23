@@ -422,19 +422,6 @@ function loadState() {
 }
 
 /**
- * Hide elements that should be initially hidden.
- */
-function initializeHiddenElements() {
-  elements.quranAudio.addClass("hidden");
-  elements.prevAyah.addClass("hidden");
-  elements.nextAyah.addClass("hidden");
-  elements.quranContent.addClass("hidden");
-  elements.toggleAutoplay.addClass("hidden");
-  elements.toggleLoop.addClass("hidden");
-  elements.toggleRangeMode.addClass("hidden");
-}
-
-/**
  * Sets up all event listeners for the application
  */
 function setupEventListeners() {
@@ -564,7 +551,6 @@ function setupEventListeners() {
  * @returns {Promise<void>}
  */
 async function init() {
-  initializeHiddenElements();
   setupEventListeners();
   await Promise.all([loadSurahs(), loadTextEditions(), loadAudioEditions()]);
   loadState();
