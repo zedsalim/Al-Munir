@@ -36,6 +36,8 @@ const elements = {
   rangeStart: $("#rangeStart"),
   rangeEnd: $("#rangeEnd"),
   setRange: $("#setRange"),
+  goToFirstAyah: $("#goToFirstAyah"),
+  goToLastAyah: $("#goToLastAyah"),
   quranContent: $("#quranContent"),
 };
 
@@ -282,6 +284,7 @@ function toggleOptionsBasedOnSurah() {
 
   elements.editionSelect.prop("disabled", isSelected);
   elements.audioEditionSelect.prop("disabled", isSelected);
+  elements.rangeControls.toggleClass("hidden", isSelected);
 
   elements.editionSelect.css("cursor", isSelected ? "not-allowed" : "pointer");
   elements.audioEditionSelect.css(
@@ -345,6 +348,8 @@ function updateControlsVisibility() {
     !(surahSelected && audioEditionSelected)
   );
   elements.toggleRangeMode.toggleClass("hidden", !surahSelected);
+  elements.goToFirstAyah.toggleClass("hidden", !surahSelected);
+  elements.goToLastAyah.toggleClass("hidden", !surahSelected);
 }
 
 /**
@@ -460,9 +465,9 @@ function setupEventListeners() {
     );
 
     if (state.rangeModeEnabled) {
-      elements.rangeStart.val(state.currentAyah || 1);
+      elements.rangeStart.val(1);
       elements.rangeEnd.val(state.totalAyahs);
-      state.rangeStart = state.currentAyah || 1;
+      state.rangeStart = 1;
       state.rangeEnd = state.totalAyahs;
     }
 
@@ -492,6 +497,22 @@ function setupEventListeners() {
     saveState();
   });
 
+  elements.goToFirstAyah.on("click", function () {
+    if (state.currentSurah) {
+      const ayahToLoad = state.rangeModeEnabled ? state.rangeStart : 1;
+      loadAyah(state.currentSurah, ayahToLoad);
+    }
+  });
+
+  elements.goToLastAyah.on("click", function () {
+    if (state.currentSurah) {
+      const ayahToLoad = state.rangeModeEnabled
+        ? state.rangeEnd
+        : state.totalAyahs;
+      loadAyah(state.currentSurah, ayahToLoad);
+    }
+  });
+
   elements.prevAyah.on("click", function () {
     const minAyah = state.rangeModeEnabled ? state.rangeStart : 1;
     if (state.currentAyah > minAyah) {
@@ -511,7 +532,14 @@ function setupEventListeners() {
     if (selectedValue && selectedValue !== "selectSurah") {
       state.currentSurah = parseInt(selectedValue);
       state.currentAyah = 1;
-      loadAyah(state.currentSurah, state.currentAyah);
+      loadAyah(state.currentSurah, state.currentAyah).then(() => {
+        if (state.rangeModeEnabled) {
+          state.rangeStart = 1;
+          state.rangeEnd = state.totalAyahs;
+          elements.rangeStart.val(1);
+          elements.rangeEnd.val(state.totalAyahs);
+        }
+      });
     } else {
       state.currentSurah = "selectSurah";
       state.currentAyah = null;

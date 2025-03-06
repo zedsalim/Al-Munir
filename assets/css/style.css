@@ -284,6 +284,7 @@ audio {
   display: flex;
   gap: 10px;
   align-items: center;
+  justify-content: center;
   margin: 10px 0;
   padding: 10px;
   background: var(--playback-bg);
@@ -295,6 +296,16 @@ audio {
 .range-controls input {
   width: 60px;
   padding: 4px;
+}
+
+/* Container for navigation buttons to go to the first and last ayah */
+.ayah-navigation-control {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 15px 0;
 }
 
 /* Site Description Styles */
