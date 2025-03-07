@@ -51,7 +51,8 @@
    Base Typography
 ====================================== */
 body {
-  font-family: var(--font-quran);
+  /* font-family: var(--font-quran); */
+  font-family: var(--font-arabic);
   font-weight: 500;
   font-style: normal;
   line-height: 1.6;
@@ -87,6 +88,19 @@ button {
 
 .active:hover {
   background: var(--active-color-hover);
+}
+
+/* Visible for screen readers only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* ======================================
@@ -170,6 +184,10 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+#quranContent {
+  font-family: var(--font-quran);
 }
 
 /* Container for a single verse */

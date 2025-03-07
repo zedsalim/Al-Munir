@@ -6,13 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="الاستماع وقراءة القرآن الكريم مع التفسير لتسهيل الحفظ والفهم والمراجعة"
+      content="المنير - موقع تحفيظ القرآن الكريم حيث يمكن الاستماع والقراءة والتفسير لتسهيل الحفظ والفهم والمراجعة. تلاوة قرآنية بأصوات مختلفة وتفاسير متعددة"
     />
-    <meta name="keywords" content="Quran, حفط, قرأن, تفسير, إستماع" />
+    <meta
+      name="keywords"
+      content="القرآن الكريم, تحفيظ القرآن, تفسير القرآن, استماع القرآن, الحفظ, القرآن, تلاوة, تجويد, مصحف, سور, آيات"
+    />
+    <meta name="author" content="موقع المنير" />
+    <meta
+      property="og:title"
+      content="المنير | Al-Munir - تحفيظ القرآن الكريم"
+    />
+    <meta
+      property="og:description"
+      content="استمع واقرأ القرآن الكريم مع التفسير لتسهيل الحفظ والفهم والمراجعة. اختر من بين مجموعة من القراء والتفاسير"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/imgs/Al-Munir.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="المنير | Al-Munir - تحفيظ القرآن الكريم"
+    />
+    <meta
+      name="twitter:description"
+      content="استمع واقرأ القرآن الكريم مع التفسير لتسهيل الحفظ والفهم والمراجعة"
+    />
     <title>المنير | Al-Munir - تحفيظ القرآن الكريم</title>
+    <link rel="canonical" href="https://www.almunir.site/" />
     <!-- <link rel="stylesheet" href="./assets/css/style.css" /> -->
     <link rel="stylesheet" href="./assets/css/style.min.css" />
     <link rel="stylesheet" href="./assets/css/dialog.min.css" />
+
+    <!-- Structured data for Rich Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "المنير - Al-Munir",
+        "url": "https://www.almunir.site/",
+        "description": "موقع تحفيظ القرآن الكريم حيث يمكن الاستماع والقراءة والتفسير لتسهيل الحفظ والفهم والمراجعة"
+      }
+    </script>
 
     <!-- jQuery -->
     <script
@@ -20,6 +55,7 @@
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+      defer
     ></script>
     <!-- Google tag (gtag.js) -->
     <script
@@ -37,84 +73,116 @@
     </script>
   </head>
   <body>
-    <div class="container">
-      <div class="site-description">
-        <img class="logo" src="./assets/imgs/Al-Munir.png" alt="Logo" />
-        <p>
-          مرحباً بكم في موقع المنير، حيث يمكنكم الاستماع وقراءة القرآن الكريم مع
-          التفسير لتسهيل الحفظ والفهم والمراجعة.
-        </p>
-        <button class="openDialogBtn" data-target="dialogVideo">
-          كيفية الاستخدام
-        </button>
-      </div>
-
-      <div class="controls">
-        <select id="surahSelect">
-          <option value="selectSurah">إختر سورة</option>
-        </select>
-        <select id="editionSelect">
-          <option value="selectTafsir">إختر تفسير</option>
-        </select>
-        <select id="audioEditionSelect">
-          <option value="selectAudio">إختر القارئ</option>
-        </select>
-      </div>
-
-      <div class="playback-controls">
-        <button id="toggleAutoplay" class="hidden">
-          التشغيل التلقائي للأيات: Off
-        </button>
-        <button id="toggleLoop" class="hidden">تكرار الأية الحالية: Off</button>
-        <button id="toggleRangeMode" class="hidden">
-          تحديد مجال الأيات: Off
-        </button>
-      </div>
-      <div class="audio-controls">
-        <audio id="quranAudio" class="hidden" controls></audio>
-        <button id="prevAyah" class="hidden">الأية السابقة</button>
-        <button id="nextAyah" class="hidden">الأية التالية</button>
-      </div>
-
-      <div id="rangeControls" class="range-controls" style="display: none">
-        <label>من الأية:</label>
-        <input type="number" id="rangeStart" min="1" value="1" />
-        <label>إلى الأية:</label>
-        <input type="number" id="rangeEnd" min="1" value="1" />
-        <button id="setRange">تطبيق</button>
-      </div>
-
-      <div class="ayah-navigation-control">
-        <button id="goToFirstAyah" class="hidden">
-          الذهاب الى الاية الاولى
-        </button>
-        <button id="goToLastAyah" class="hidden">
-          الذهاب الى الاية الاخيرة
-        </button>
-      </div>
-
-      <div id="loading" class="loader-container" style="display: none">
-        <div class="loader"></div>
-        جاري تحميل البيانات ...
-      </div>
-      <div id="error" class="error" style="display: none"></div>
-
-      <div id="quranContent" class="hidden">
-        <div class="meta-info">
-          <div id="surahInfo"></div>
-          <div id="ayahInfo"></div>
+    <header>
+      <h1 class="sr-only">المنير | Al-Munir - تحفيظ القرآن الكريم</h1>
+    </header>
+    <main>
+      <div class="container">
+        <div class="site-description">
+          <img
+            class="logo"
+            src="./assets/imgs/Al-Munir.png"
+            alt="شعار موقع المنير لتحفيظ القرآن الكريم"
+          />
+          <h2>موقع المنير لتحفيظ القرآن الكريم</h2>
+          <p>
+            حيث يمكنكم الاستماع وقراءة القرآن الكريم مع التفسير لتسهيل الحفظ
+            والفهم والمراجعة.
+          </p>
+          <button
+            class="openDialogBtn"
+            data-target="dialogVideo"
+            aria-label="عرض فيديو كيفية استخدام الموقع"
+          >
+            كيفية الاستخدام
+          </button>
         </div>
-        <div id="quranText" class="quran-text">
-          <div id="arabicText" class="arabic"></div>
-          <div id="translationText" class="translation"></div>
+
+        <section class="quran-navigation">
+          <div class="controls">
+            <select id="surahSelect" aria-label="اختر سورة">
+              <option value="selectSurah">إختر سورة</option>
+            </select>
+            <select id="editionSelect" aria-label="اختر تفسير">
+              <option value="selectTafsir">إختر تفسير</option>
+            </select>
+            <select id="audioEditionSelect" aria-label="اختر القارئ">
+              <option value="selectAudio">إختر القارئ</option>
+            </select>
+          </div>
+
+          <div class="playback-controls">
+            <button id="toggleAutoplay" class="hidden">
+              التشغيل التلقائي للآيات: Off
+            </button>
+            <button id="toggleLoop" class="hidden">
+              تكرار الآية الحالية: Off
+            </button>
+            <button id="toggleRangeMode" class="hidden">
+              تحديد مجال الآيات: Off
+            </button>
+          </div>
+          <div class="audio-controls">
+            <audio id="quranAudio" class="hidden" controls></audio>
+            <button id="prevAyah" class="hidden">الآية السابقة</button>
+            <button id="nextAyah" class="hidden">الآية التالية</button>
+          </div>
+        </section>
+
+        <section
+          id="rangeControls"
+          class="range-controls"
+          style="display: none"
+        >
+          <label for="rangeStart">من الآية:</label>
+          <input type="number" id="rangeStart" min="1" value="1" />
+          <label for="rangeEnd">إلى الآية:</label>
+          <input type="number" id="rangeEnd" min="1" value="1" />
+          <button id="setRange">تطبيق</button>
+        </section>
+
+        <div class="ayah-navigation-control">
+          <button id="goToFirstAyah" class="hidden">
+            الذهاب إلى الآية الأولى
+          </button>
+          <button id="goToLastAyah" class="hidden">
+            الذهاب إلى الآية الأخيرة
+          </button>
         </div>
+
+        <div id="loading" class="loader-container" style="display: none">
+          <div class="loader"></div>
+          جاري تحميل البيانات ...
+        </div>
+        <div id="error" class="error" style="display: none"></div>
+
+        <section id="quranContent" class="hidden">
+          <div class="meta-info">
+            <div id="surahInfo"></div>
+            <div id="ayahInfo"></div>
+          </div>
+          <article id="quranText" class="quran-text">
+            <div id="arabicText" class="arabic" lang="ar"></div>
+            <div id="translationText" class="translation"></div>
+          </article>
+        </section>
       </div>
-    </div>
+    </main>
+
+    <footer>
+      <p class="sr-only">© 2025 موقع المنير | Al-Munir</p>
+    </footer>
 
     <!-- Video Tutorial Dialog -->
-    <div id="dialogVideo" class="dialog">
+    <div
+      id="dialogVideo"
+      class="dialog"
+      role="dialog"
+      aria-labelledby="dialog-title"
+    >
       <div class="dialog-content">
-        <button class="dialog-close">&times;</button>
+        <button class="dialog-close" aria-label="إغلاق">&times;</button>
+        <h4 id="dialog-title">كيفية استخدام موقع المنير</h4>
         <video controls preload="none" poster="./assets/imgs/thumbnail.jpg">
           <source src="./assets/data/tutorial.mp4" type="video/mp4" />
           متصفحك لا يدعم تشغيل الفيديو.
@@ -123,7 +191,7 @@
     </div>
 
     <!-- <script src="./assets/js/script_api_jQuery.js"></script> -->
-    <script src="./assets/js/script.min.js"></script>
-    <script src="./assets/js/dialog.min.js"></script>
+    <script src="./assets/js/script.min.js" defer></script>
+    <script src="./assets/js/dialog.min.js" defer></script>
   </body>
 </html>
