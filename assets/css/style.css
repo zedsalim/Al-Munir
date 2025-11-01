@@ -38,6 +38,24 @@
   --box-shadow-container: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  /* Colors */
+  --bg-body: #1a1a1a;
+  --bg-container: #2d2d2d;
+  --border-color: #404040;
+  --primary-color: #4e738a;
+  --primary-hover: #6a94b3;
+  --disabled-color: #555555;
+  --playback-bg: #353535;
+  --text-color: #e0e0e0;
+  --edition-label-color: #b0b0b0;
+  --verse-bg: #353535;
+  --active-color: #67c4b7;
+  --active-color-hover: #7dd4c6;
+  --box-shadow-container: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* ======================================
    Global Styles / Reset
 ====================================== */
@@ -208,6 +226,12 @@ button:disabled {
   padding: 15px 10px;
   background: var(--bg-container);
   border-radius: 4px;
+  color: #000000; /* Default black for light mode */
+}
+
+/* Dark Mode - Arabic text (Quran verses) */
+[data-theme="dark"] .arabic {
+  color: #ffffff; /* White for dark mode */
 }
 
 /* Translation text styling */
@@ -272,6 +296,10 @@ button:disabled {
   padding: 10px;
 }
 
+[data-theme="dark"] .error {
+  color: #ff6b6b;
+}
+
 /* Meta information display (e.g., surah and ayah info) */
 .meta-info {
   text-align: center;
@@ -314,6 +342,21 @@ audio {
 .range-controls input {
   width: 60px;
   padding: 4px;
+  background: var(--bg-container);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+/* Select dropdowns in dark mode */
+[data-theme="dark"] select {
+  background: var(--bg-container);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] select option {
+  background: var(--bg-container);
+  color: var(--text-color);
 }
 
 /* Container for navigation buttons to go to the first and last ayah */
@@ -338,6 +381,56 @@ audio {
 .site-description p {
   margin-bottom: 10px;
   font-size: 1.6em;
+}
+
+/* Dark Mode - Site Description Text */
+[data-theme="dark"] .site-description,
+[data-theme="dark"] .site-description h2,
+[data-theme="dark"] .site-description p {
+  color: #ffffff;
+}
+
+/* Dark Mode - Logo Image */
+/* Logo image is changed via JavaScript to Al-Munir-white.png in dark mode */
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  padding: 10px 15px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-container);
+  color: var(--text-color);
+  box-shadow: var(--box-shadow-container);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .theme-toggle {
+  border-color: var(--border-color);
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    left: 10px;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
 }
 
 /* 
