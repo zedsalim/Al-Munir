@@ -423,6 +423,20 @@ audio {
   border-color: var(--border-color);
 }
 
+/* Domain name warning */
+.domain-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border: 1px solid #ffeeba;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+
 @media (max-width: 768px) {
   .theme-toggle {
     top: 10px;

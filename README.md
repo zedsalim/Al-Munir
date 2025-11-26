@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://almunir.site" target="_blank">
+  <a href="https://almunir.netlify.app" target="_blank">
     <img src="./assets/imgs/Al-Munir-ORG.png" alt="Logo" width="400">
   </a>
 </p>
@@ -12,6 +12,8 @@
 </p>
 
 # موقع المنير | Al-Munir
+
+⚠️ **ملاحظة:** في حال عدم تجديد اسم النطاق الرئيسي، يمكن الوصول إلى الموقع من هذا النطاق المجاني: [almunir.netlify.app](https://almunir.netlify.app)
 
 يسمح موقع **المنير** للاستماع وقراءة القرآن الكريم مع التفسير لتسهيل عملية الحفظ والفهم والمراجعة. يوفر الموقع:
 
