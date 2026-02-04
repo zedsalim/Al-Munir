@@ -1,3 +1,105 @@
+// ============================================
+// Dark Mode Functionality
+// ============================================
+(function initDarkMode() {
+  'use strict';
+
+  const html = document.documentElement;
+  const STORAGE_KEY = 'Al-Munir_Theme';
+  const THEME_DARK = 'dark';
+  const THEME_LIGHT = 'light';
+  const THEME_AUTO = 'auto';
+
+  function updateToggleButton(isDark) {
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) {
+      if (isDark) {
+        toggle.textContent = '☀️';
+        toggle.setAttribute('aria-label', 'تفعيل الوضع النهاري');
+        toggle.setAttribute('title', 'تفعيل الوضع النهاري');
+      } else {
+        toggle.textContent = '🌙';
+        toggle.setAttribute('aria-label', 'تبديل الوضع الليلي');
+        toggle.setAttribute('title', 'تبديل الوضع الليلي');
+      }
+    }
+  }
+
+  function applyTheme(theme) {
+    let effectiveTheme = theme;
+
+    if (theme === THEME_AUTO || !theme) {
+      effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? THEME_DARK
+        : THEME_LIGHT;
+    }
+
+    if (effectiveTheme === THEME_DARK) {
+      html.setAttribute('data-theme', THEME_DARK);
+      updateToggleButton(true);
+    } else {
+      html.removeAttribute('data-theme');
+      updateToggleButton(false);
+    }
+
+    localStorage.setItem(STORAGE_KEY, theme || THEME_AUTO);
+  }
+
+  function toggleTheme() {
+    const currentTheme =
+      html.getAttribute('data-theme') === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+    const newTheme = currentTheme === THEME_DARK ? THEME_LIGHT : THEME_DARK;
+    applyTheme(newTheme);
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem(STORAGE_KEY);
+    if (savedTheme === THEME_DARK || savedTheme === THEME_LIGHT) {
+      applyTheme(savedTheme);
+    } else {
+      applyTheme(THEME_AUTO);
+    }
+  }
+
+  function watchSystemTheme() {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = function () {
+      const currentTheme = localStorage.getItem(STORAGE_KEY);
+      if (!currentTheme || currentTheme === THEME_AUTO) {
+        applyTheme(THEME_AUTO);
+      }
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handler);
+    } else {
+      mediaQuery.addListener(handler);
+    }
+  }
+
+  function setupDarkMode() {
+    const toggleButton = document.getElementById('themeToggle');
+    if (!toggleButton) {
+      console.error('Theme toggle button not found');
+      return;
+    }
+
+    initTheme();
+    watchSystemTheme();
+    toggleButton.addEventListener('click', toggleTheme);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupDarkMode);
+  } else {
+    setupDarkMode();
+  }
+})();
+
+// ============================================
+// Quran Application Functionality
+// ============================================
+
 // API BASE URL
 const API_BASE = 'https://api.alquran.cloud/v1';
 
@@ -23,7 +125,6 @@ const elements = {
   loading: $('#loading'),
   error: $('#error'),
   arabicText: $('#arabicText'),
-  translationText: $('#translationText'),
   surahInfo: $('#surahInfo'),
   ayahInfo: $('#ayahInfo'),
   quranAudio: $('#quranAudio'),
@@ -39,6 +140,10 @@ const elements = {
   goToFirstAyah: $('#goToFirstAyah'),
   goToLastAyah: $('#goToLastAyah'),
   quranContent: $('#quranContent'),
+  playbackControlsSection: $('#playbackControlsSection'),
+  audioControlsSection: $('#audioControlsSection'),
+  navigationButtons: $('#navigationButtons'),
+  ayahNavigationSection: $('#ayahNavigationSection'),
 };
 
 // Define allowed identifiers for both text and audio
@@ -77,8 +182,12 @@ const allowedIdentifiers = {
  * @param {boolean} show - Whether to show loading.
  */
 function showLoading(show) {
-  elements.loading.css('display', show ? 'block' : 'none');
-  if (show) elements.error.css('display', 'none');
+  if (show) {
+    elements.loading.removeClass('d-none');
+    elements.error.addClass('d-none');
+  } else {
+    elements.loading.addClass('d-none');
+  }
 }
 
 /**
@@ -86,8 +195,8 @@ function showLoading(show) {
  * @param {string} message - The error message.
  */
 function showError(message) {
-  elements.error.text(message).css('display', 'block');
-  elements.loading.css('display', 'none');
+  elements.error.text(message).removeClass('d-none');
+  elements.loading.addClass('d-none');
 }
 
 /**
@@ -97,9 +206,12 @@ function showError(message) {
  * @param {boolean} isActive - Whether the toggle is active.
  */
 function updateToggleButton($button, label, isActive) {
-  $button
-    .text(`${label}: ${isActive ? 'On' : 'Off'}`)
-    .toggleClass('active', isActive);
+  $button.text(`${label}: ${isActive ? 'On' : 'Off'}`);
+  if (isActive) {
+    $button.addClass('active');
+  } else {
+    $button.removeClass('active');
+  }
 }
 
 /**
@@ -190,6 +302,19 @@ async function loadAudioEditions() {
 }
 
 /**
+ * Validate range input values
+ */
+function validateRangeInput() {
+  const startVal = parseInt(elements.rangeStart.val());
+  const endVal = parseInt(elements.rangeEnd.val());
+
+  if (startVal < 1) elements.rangeStart.val(1);
+  if (endVal < 1) elements.rangeEnd.val(1);
+  if (startVal > state.totalAyahs) elements.rangeStart.val(state.totalAyahs);
+  if (endVal > state.totalAyahs) elements.rangeEnd.val(state.totalAyahs);
+}
+
+/**
  * Load an ayah along with its translation and audio.
  * @param {number|string} surahNumber
  * @param {number} ayahNumber
@@ -227,7 +352,7 @@ async function loadAyah(
         <div class="arabic">${arabicAyahText}</div>
         ${
           translationText
-            ? `<div class="edition-label">${translationEdition}</div>
+            ? `<div class="edition-label mt-3">${translationEdition}</div>
                <div class="translation">${translationText}</div>`
             : ''
         }
@@ -284,33 +409,19 @@ function toggleOptionsBasedOnSurah() {
 
   elements.editionSelect.prop('disabled', isSelected);
   elements.audioEditionSelect.prop('disabled', isSelected);
-  elements.rangeControls.toggleClass('hidden', isSelected);
 
-  elements.editionSelect.css('cursor', isSelected ? 'not-allowed' : 'pointer');
-  elements.audioEditionSelect.css(
-    'cursor',
-    isSelected ? 'not-allowed' : 'pointer',
-  );
+  if (isSelected) {
+    elements.rangeControls.addClass('d-none');
+    elements.playbackControlsSection.addClass('d-none');
+    elements.audioControlsSection.addClass('d-none');
+    elements.ayahNavigationSection.addClass('d-none');
+  }
 
   updateControlsVisibility();
 }
 
 /**
- * Validates the range input to ensure it's within valid bounds
- * @param {Event} event - The input event object
- */
-function validateRangeInput(event) {
-  const $input = $(event.target);
-  let value = Number($input.val());
-  if (value > state.totalAyahs) {
-    $input.val(state.totalAyahs);
-  } else if (value < 1) {
-    $input.val(1);
-  }
-}
-
-/**
- * Update the previous/next buttons based on the current ayah.
+ * Update navigation buttons state.
  * @param {number} currentNumber - The current ayah number.
  * @param {number} totalNumber - Total number of ayahs in the surah.
  */
@@ -332,24 +443,22 @@ function updateControlsVisibility() {
   const audioEditionSelected =
     elements.audioEditionSelect.val() !== 'selectAudio';
 
-  elements.quranAudio.toggleClass(
-    'hidden',
-    !(surahSelected && audioEditionSelected),
-  );
-  elements.prevAyah.toggleClass('hidden', !surahSelected);
-  elements.nextAyah.toggleClass('hidden', !surahSelected);
-  elements.quranContent.toggleClass('hidden', !surahSelected);
-  elements.toggleAutoplay.toggleClass(
-    'hidden',
-    !(surahSelected && audioEditionSelected),
-  );
-  elements.toggleLoop.toggleClass(
-    'hidden',
-    !(surahSelected && audioEditionSelected),
-  );
-  elements.toggleRangeMode.toggleClass('hidden', !surahSelected);
-  elements.goToFirstAyah.toggleClass('hidden', !surahSelected);
-  elements.goToLastAyah.toggleClass('hidden', !surahSelected);
+  if (surahSelected) {
+    elements.quranContent.removeClass('d-none');
+    elements.playbackControlsSection.removeClass('d-none');
+    elements.ayahNavigationSection.removeClass('d-none');
+
+    if (audioEditionSelected) {
+      elements.audioControlsSection.removeClass('d-none');
+    } else {
+      elements.audioControlsSection.addClass('d-none');
+    }
+  } else {
+    elements.quranContent.addClass('d-none');
+    elements.playbackControlsSection.addClass('d-none');
+    elements.audioControlsSection.addClass('d-none');
+    elements.ayahNavigationSection.addClass('d-none');
+  }
 }
 
 /**
@@ -411,10 +520,11 @@ function loadState() {
       elements.rangeStart.val(state.rangeStart);
       elements.rangeEnd.val(state.rangeEnd);
 
-      elements.rangeControls.css(
-        'display',
-        state.rangeModeEnabled ? 'flex' : 'none',
-      );
+      if (state.rangeModeEnabled) {
+        elements.rangeControls.removeClass('d-none');
+      } else {
+        elements.rangeControls.addClass('d-none');
+      }
 
       if (state.currentSurah && state.currentAyah) {
         loadAyah(state.currentSurah, state.currentAyah, state.currentEdition);
@@ -459,16 +569,15 @@ function setupEventListeners() {
       'تحديد مجال الأيات',
       state.rangeModeEnabled,
     );
-    elements.rangeControls.css(
-      'display',
-      state.rangeModeEnabled ? 'flex' : 'none',
-    );
 
     if (state.rangeModeEnabled) {
+      elements.rangeControls.removeClass('d-none');
       elements.rangeStart.val(1);
       elements.rangeEnd.val(state.totalAyahs);
       state.rangeStart = 1;
       state.rangeEnd = state.totalAyahs;
+    } else {
+      elements.rangeControls.addClass('d-none');
     }
 
     updateNavigationButtons(state.currentAyah || 1, state.totalAyahs);
@@ -572,6 +681,18 @@ function setupEventListeners() {
     updateControlsVisibility();
     saveState();
   });
+
+  // Modal video pause on close
+  const tutorialModal = document.getElementById('tutorialModal');
+  if (tutorialModal) {
+    tutorialModal.addEventListener('hidden.bs.modal', function () {
+      const video = tutorialModal.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  }
 }
 
 /**
@@ -590,7 +711,7 @@ $(function () {
   const hostname = window.location.hostname;
 
   if (hostname === 'almunir.netlify.app') {
-    $('.domain-warning').hide();
+    $('#domainWarning').hide();
   }
 });
 

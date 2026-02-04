@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="./assets/imgs/favicon.ico" />
@@ -34,9 +34,25 @@
     />
     <title>المنير | Al-Munir - تحفيظ القرآن الكريم</title>
     <link rel="canonical" href="https://www.almunir.site/" />
-    <!-- <link rel="stylesheet" href="./assets/css/style.css" /> -->
-    <link rel="stylesheet" href="./assets/css/style.min.css" />
-    <link rel="stylesheet" href="./assets/css/dialog.min.css" />
+
+    <!-- Bootstrap CSS (RTL) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
+      rel="stylesheet"
+      integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
 
     <!-- Structured data for Rich Snippets -->
     <script type="application/ld+json">
@@ -55,8 +71,8 @@
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
-      defer
     ></script>
+
     <!-- Google tag (gtag.js) -->
     <script
       async
@@ -68,145 +84,452 @@
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
-
       gtag('config', 'G-9RH1824M0W');
     </script>
   </head>
   <body>
-    <div dir="rtl" class="domain-warning">
-      في حال عدم تجديد اسم النطاق، يمكن الوصول إلى الموقع من هذا النطاق المجاني:
-      <a href="https://almunir.netlify.app" target="_blank"
-        >almunir.netlify.app</a
-      >
+    <!-- Theme Toggle Button -->
+    <button
+      id="themeToggle"
+      class="btn btn-light theme-toggle"
+      aria-label="تبديل الوضع الليلي"
+      title="تبديل الوضع الليلي"
+    >
+      🌙
+    </button>
+
+    <!-- Domain Warning -->
+    <div class="container mb-3" id="domainWarning">
+      <div class="alert alert-warning text-center mb-0" role="alert">
+        في حال عدم تجديد اسم النطاق، يمكن الوصول إلى الموقع من هذا النطاق
+        المجاني:
+        <a href="https://almunir.netlify.app" target="_blank" class="alert-link"
+          >almunir.netlify.app</a
+        >
+      </div>
     </div>
 
-    <header>
-      <h1 class="sr-only">المنير | Al-Munir - تحفيظ القرآن الكريم</h1>
-      <button
-        id="themeToggle"
-        class="theme-toggle"
-        aria-label="تبديل الوضع الليلي"
-        title="تبديل الوضع الليلي"
-      >
-        🌙
-      </button>
-    </header>
-    <main>
-      <div class="container">
-        <div class="site-description">
-          <img
-            class="logo"
-            src="./assets/imgs/Al-Munir.png"
-            alt="شعار موقع المنير لتحفيظ القرآن الكريم"
-          />
-          <h2>موقع المنير لتحفيظ القرآن الكريم</h2>
-          <p>
-            حيث يمكنكم الاستماع وقراءة القرآن الكريم مع التفسير لتسهيل الحفظ
-            والفهم والمراجعة.
-          </p>
-          <button
-            class="openDialogBtn"
-            data-target="dialogVideo"
-            aria-label="عرض فيديو كيفية استخدام الموقع"
-          >
-            كيفية الاستخدام
-          </button>
+    <!-- Main Container -->
+    <div class="container-fluid">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <!-- Site Header -->
+          <header class="text-center mb-4">
+            <h1 class="visually-hidden">
+              المنير | Al-Munir - تحفيظ القرآن الكريم
+            </h1>
+            <img
+              class="logo-img mb-3"
+              src="./assets/imgs/Al-Munir.png"
+              alt="شعار موقع المنير لتحفيظ القرآن الكريم"
+            />
+            <div class="site-description">
+              <h2>موقع المنير لتحفيظ القرآن الكريم</h2>
+              <p>
+                حيث يمكنكم الاستماع وقراءة القرآن الكريم مع التفسير لتسهيل الحفظ
+                والفهم والمراجعة.
+              </p>
+              <button
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#tutorialModal"
+              >
+                كيفية الاستخدام
+              </button>
+            </div>
+          </header>
+
+          <!-- Controls Section -->
+          <section class="mb-4">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <select
+                  id="surahSelect"
+                  class="form-select"
+                  aria-label="اختر سورة"
+                >
+                  <option value="selectSurah" selected>إختر سورة</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select
+                  id="editionSelect"
+                  class="form-select"
+                  aria-label="اختر تفسير"
+                  disabled
+                >
+                  <option value="selectTafsir" selected>إختر تفسير</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <select
+                  id="audioEditionSelect"
+                  class="form-select"
+                  aria-label="اختر القارئ"
+                  disabled
+                >
+                  <option value="selectAudio" selected>إختر القارئ</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <!-- Playback Controls -->
+          <section class="mb-3 d-none" id="playbackControlsSection">
+            <div class="card bg-light">
+              <div class="card-body">
+                <div class="d-flex flex-wrap gap-2 justify-content-center">
+                  <button
+                    id="toggleAutoplay"
+                    class="btn btn-primary btn"
+                    type="button"
+                  >
+                    التشغيل التلقائي للآيات: Off
+                  </button>
+                  <button
+                    id="toggleLoop"
+                    class="btn btn-primary btn"
+                    type="button"
+                  >
+                    تكرار الآية الحالية: Off
+                  </button>
+                  <button
+                    id="toggleRangeMode"
+                    class="btn btn-primary btn"
+                    type="button"
+                  >
+                    تحديد مجال الآيات: Off
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Range Controls -->
+          <section class="mb-3 d-none" id="rangeControls">
+            <div class="card bg-light">
+              <div class="card-body">
+                <div
+                  class="d-flex flex-wrap gap-2 align-items-center justify-content-center"
+                >
+                  <label for="rangeStart" class="form-label mb-0"
+                    >من الآية:</label
+                  >
+                  <input
+                    type="number"
+                    id="rangeStart"
+                    class="form-control"
+                    style="width: 80px"
+                    min="1"
+                    value="1"
+                  />
+                  <label for="rangeEnd" class="form-label mb-0"
+                    >إلى الآية:</label
+                  >
+                  <input
+                    type="number"
+                    id="rangeEnd"
+                    class="form-control"
+                    style="width: 80px"
+                    min="1"
+                    value="1"
+                  />
+                  <button id="setRange" class="btn btn-primary btn">
+                    تطبيق
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Audio Controls -->
+          <section class="mb-3 d-none" id="audioControlsSection">
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+              <audio
+                id="quranAudio"
+                controls
+                class="w-100"
+                style="max-width: 600px"
+              ></audio>
+            </div>
+            <div
+              class="d-flex flex-wrap gap-2 justify-content-center mt-2"
+              id="navigationButtons"
+            >
+              <button id="prevAyah" class="btn btn-primary" type="button">
+                الآية السابقة
+              </button>
+              <button id="nextAyah" class="btn btn-primary" type="button">
+                الآية التالية
+              </button>
+            </div>
+          </section>
+
+          <!-- Navigation to First/Last Ayah -->
+          <section class="mb-3 d-none" id="ayahNavigationSection">
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+              <button id="goToFirstAyah" class="btn btn-primary" type="button">
+                الذهاب إلى الآية الأولى
+              </button>
+              <button id="goToLastAyah" class="btn btn-primary" type="button">
+                الذهاب إلى الآية الأخيرة
+              </button>
+            </div>
+          </section>
+
+          <!-- Loading Indicator -->
+          <div id="loading" class="text-center py-4 d-none">
+            <div class="loader mb-3"></div>
+            <div>جاري تحميل البيانات ...</div>
+          </div>
+
+          <!-- Error Message -->
+          <div id="error" class="alert alert-danger text-center d-none"></div>
+
+          <!-- Quran Content -->
+          <section id="quranContent" class="d-none">
+            <div class="text-center mb-3 text-muted">
+              <div id="surahInfo" class="mb-1"></div>
+              <div id="ayahInfo"></div>
+            </div>
+            <article class="quran-text">
+              <div id="arabicText"></div>
+            </article>
+          </section>
         </div>
-
-        <section class="quran-navigation">
-          <div class="controls">
-            <select id="surahSelect" aria-label="اختر سورة">
-              <option value="selectSurah">إختر سورة</option>
-            </select>
-            <select id="editionSelect" aria-label="اختر تفسير">
-              <option value="selectTafsir">إختر تفسير</option>
-            </select>
-            <select id="audioEditionSelect" aria-label="اختر القارئ">
-              <option value="selectAudio">إختر القارئ</option>
-            </select>
-          </div>
-
-          <div class="playback-controls">
-            <button id="toggleAutoplay" class="hidden">
-              التشغيل التلقائي للآيات: Off
-            </button>
-            <button id="toggleLoop" class="hidden">
-              تكرار الآية الحالية: Off
-            </button>
-            <button id="toggleRangeMode" class="hidden">
-              تحديد مجال الآيات: Off
-            </button>
-          </div>
-          <div class="audio-controls">
-            <audio id="quranAudio" class="hidden" controls></audio>
-            <button id="prevAyah" class="hidden">الآية السابقة</button>
-            <button id="nextAyah" class="hidden">الآية التالية</button>
-          </div>
-        </section>
-
-        <section
-          id="rangeControls"
-          class="range-controls"
-          style="display: none"
-        >
-          <label for="rangeStart">من الآية:</label>
-          <input type="number" id="rangeStart" min="1" value="1" />
-          <label for="rangeEnd">إلى الآية:</label>
-          <input type="number" id="rangeEnd" min="1" value="1" />
-          <button id="setRange">تطبيق</button>
-        </section>
-
-        <div class="ayah-navigation-control">
-          <button id="goToFirstAyah" class="hidden">
-            الذهاب إلى الآية الأولى
-          </button>
-          <button id="goToLastAyah" class="hidden">
-            الذهاب إلى الآية الأخيرة
-          </button>
-        </div>
-
-        <div id="loading" class="loader-container" style="display: none">
-          <div class="loader"></div>
-          جاري تحميل البيانات ...
-        </div>
-        <div id="error" class="error" style="display: none"></div>
-
-        <section id="quranContent" class="hidden">
-          <div class="meta-info">
-            <div id="surahInfo"></div>
-            <div id="ayahInfo"></div>
-          </div>
-          <article id="quranText" class="quran-text">
-            <div id="arabicText" class="arabic" lang="ar"></div>
-            <div id="translationText" class="translation"></div>
-          </article>
-        </section>
       </div>
-    </main>
+    </div>
 
-    <footer>
-      <p class="sr-only">© 2025 موقع المنير | Al-Munir</p>
+    <!-- Similar Websites Accordion Section -->
+    <section class="container-fluid my-5">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <h3 class="text-center mb-3 similar-section-title">
+            مواقع قرآنية مشابهة
+          </h3>
+          <p class="text-center text-muted mb-4">
+            مواقع أخرى لخدمة القرآن الكريم يمكن الاستفادة منها (انقر لعرض
+            التفاصيل):
+          </p>
+
+          <div class="accordion" id="similarSitesAccordion">
+            <!-- Item 1: Tanzil -->
+            <div class="accordion-item border rounded-3 mb-3">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button collapsed fw-bold fs-5 py-3"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="false"
+                  aria-controls="collapseOne"
+                >
+                  تنزيل (Tanzil)
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#similarSitesAccordion"
+              >
+                <div class="accordion-body pt-3">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="mb-3">
+                        مصدر موثوق لنصّ القرآن الكريم المُدقَّق، يوفر نص القرآن
+                        بدقة عالية مع إمكانية تنزيله بصيغ مختلفة.
+                      </p>
+                      <a
+                        href="https://tanzil.net/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary btn-sm similar-site-link"
+                      >
+                        زيارة الموقع
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2: Quran.com -->
+            <div class="accordion-item border rounded-3 mb-3">
+              <h2 class="accordion-header" id="headingTwo">
+                <button
+                  class="accordion-button collapsed fw-bold fs-5 py-3"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo"
+                >
+                  القرآن الكريم (Quran.com)
+                </button>
+              </h2>
+              <div
+                id="collapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#similarSitesAccordion"
+              >
+                <div class="accordion-body pt-3">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="mb-3">
+                        قراءة واستماع للقرآن الكريم مع ترجمة متعددة اللغات،
+                        وواجهة مستخدم متطورة وسهلة الاستخدام.
+                      </p>
+                      <a
+                        href="https://quran.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary btn-sm similar-site-link"
+                      >
+                        زيارة الموقع
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 3: Quran Explorer -->
+            <div class="accordion-item border rounded-3 mb-3">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  class="accordion-button collapsed fw-bold fs-5 py-3"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree"
+                  aria-expanded="false"
+                  aria-controls="collapseThree"
+                >
+                  المصحف الإلكتروني (Quran Explorer)
+                </button>
+              </h2>
+              <div
+                id="collapseThree"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingThree"
+                data-bs-parent="#similarSitesAccordion"
+              >
+                <div class="accordion-body pt-3">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="mb-3">
+                        مصحف تفاعلي للقراءة والتلاوة مع عدة قراء، يوفر إمكانية
+                        الاستماع والتلاوة مع الترجمة.
+                      </p>
+                      <a
+                        href="https://www.quranexplorer.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary btn-sm similar-site-link"
+                      >
+                        زيارة الموقع
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 4: Quran Flash -->
+            <div class="accordion-item border rounded-3">
+              <h2 class="accordion-header" id="headingFive">
+                <button
+                  class="accordion-button collapsed fw-bold fs-5 py-3"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseFive"
+                  aria-expanded="false"
+                  aria-controls="collapseFive"
+                >
+                  موقع طريق القرآن (Quran Flash)
+                </button>
+              </h2>
+              <div
+                id="collapseFive"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingFive"
+                data-bs-parent="#similarSitesAccordion"
+              >
+                <div class="accordion-body pt-3">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <p class="mb-3">
+                        تلاوة القرآن الكريم مع خيارات عرض وترجمة متعددة، بتصميم
+                        يشبه المصحف الورقي.
+                      </p>
+                      <a
+                        href="https://quranflash.com/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary btn-sm similar-site-link"
+                      >
+                        زيارة الموقع
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-3">
+      <p class="visually-hidden">© 2025 موقع المنير | Al-Munir</p>
     </footer>
 
-    <!-- Video Tutorial Dialog -->
+    <!-- Tutorial Modal -->
     <div
-      id="dialogVideo"
-      class="dialog"
-      role="dialog"
-      aria-labelledby="dialog-title"
+      class="modal fade"
+      id="tutorialModal"
+      tabindex="-1"
+      aria-labelledby="tutorialModalLabel"
+      aria-hidden="true"
     >
-      <div class="dialog-content">
-        <button class="dialog-close" aria-label="إغلاق">&times;</button>
-        <h4 id="dialog-title">كيفية استخدام موقع المنير</h4>
-        <video controls preload="none" poster="./assets/imgs/thumbnail.jpg">
-          <source src="./assets/data/tutorial.mp4" type="video/mp4" />
-          متصفحك لا يدعم تشغيل الفيديو.
-        </video>
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tutorialModalLabel">
+              كيفية استخدام موقع المنير
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="إغلاق"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <video
+              controls
+              preload="none"
+              poster="./assets/imgs/thumbnail.jpg"
+              class="w-100"
+            >
+              <source src="./assets/data/tutorial.mp4" type="video/mp4" />
+              متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+          </div>
+        </div>
       </div>
     </div>
 
-    <script src="./assets/js/script.js" defer></script>
-    <script src="./assets/js/dialog.min.js" defer></script>
-    <script src="./assets/js/darkmode.min.js" defer></script>
+    <!-- Bootstrap JS Bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Custom Script -->
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>

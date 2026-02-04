@@ -1,23 +1,20 @@
 /* ======================================
    Imports / Fonts
 ====================================== */
-@import url("https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
 /* ======================================
-   CSS Variables
+   Style
 ====================================== */
 :root {
   /* Fonts */
-  --font-quran: "Amiri Quran", serif;
-  --font-arabic: "Tajawal", serif;
-
-  /* Font Sizes */
-  --font-size-base: 22px;
+  --font-quran: 'Amiri Quran', serif;
+  --font-arabic: 'Tajawal', serif;
   --quran-font-size: 38px;
   --translation-font-size: 28px;
 
-  /* Colors */
+  /* Light Mode Colors */
   --bg-body: #f0f0f0;
   --bg-container: #ffffff;
   --border-color: #ddd;
@@ -25,22 +22,148 @@
   --primary-hover: #4e738a;
   --disabled-color: #cccccc;
   --playback-bg: #f5f5f5;
-  --text-color: #666;
+  --text-color: #000;
   --edition-label-color: #888;
   --verse-bg: #f9f9f9;
   --active-color: #4f9b91;
   --active-color-hover: #67c4b7;
 
-  /* Spacing */
-  --padding-body: 20px;
-  --padding-container: 20px;
-  --border-radius-container: 10px;
-  --box-shadow-container: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Bootstrap Overrides */
+  --bs-primary: #395364;
+  --bs-primary-rgb: 57, 83, 100;
+  --bs-success: #4f9b91;
+  --bs-success-rgb: 79, 155, 145;
+  --bs-body-bg: #f0f0f0;
+  --bs-body-color: #666;
+  --bs-border-color: #ddd;
+}
+
+body {
+  font-family: var(--font-arabic);
+  font-size: 25px;
+  font-weight: 500;
+  background-color: var(--bg-body);
+  color: var(--text-color);
+  padding: 20px 0;
+}
+
+select,
+option,
+label,
+button {
+  font-family: var(--font-arabic);
+  font-size: var(--font-size-base);
+  direction: rtl;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+/* Bootstrap Component Overrides - Light Mode */
+.card {
+  background-color: var(--bg-container);
+  border-color: var(--border-color);
+}
+
+.form-select,
+.form-control {
+  border-color: var(--border-color);
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(57, 83, 100, 0.25);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: white;
+}
+
+.btn-primary:disabled {
+  background-color: var(--disabled-color);
+  border-color: var(--disabled-color);
+  color: white;
+}
+
+.btn-primary.active {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
+  color: white;
+}
+
+.btn-primary.active:hover {
+  background-color: var(--active-color-hover);
+  border-color: var(--active-color-hover);
+}
+
+.btn-success {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
+  color: white;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background-color: var(--active-color-hover);
+  border-color: var(--active-color-hover);
+  color: white;
+}
+
+.btn-success.active {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
+  color: white;
+}
+
+.btn-success.active:hover {
+  background-color: var(--active-color-hover);
+  border-color: var(--active-color-hover);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.card.bg-light {
+  background-color: var(--playback-bg) !important;
+}
+
+.btn {
+  font-size: 1.1rem !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.form-control,
+.form-select {
+  font-size: 1.1rem !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+button:disabled,
+select:disabled {
+  background: var(--disabled-color);
+  cursor: not-allowed !important;
+  opacity: 0.6;
 }
 
 /* Dark Mode Variables */
-[data-theme="dark"] {
-  /* Colors */
+[data-theme='dark'] {
   --bg-body: #1a1a1a;
   --bg-container: #2d2d2d;
   --border-color: #404040;
@@ -53,231 +176,207 @@
   --verse-bg: #353535;
   --active-color: #67c4b7;
   --active-color-hover: #7dd4c6;
-  --box-shadow-container: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+  /* Bootstrap Overrides Dark */
+  --bs-primary: #4e738a;
+  --bs-primary-rgb: 78, 115, 138;
+  --bs-success: #67c4b7;
+  --bs-success-rgb: 103, 196, 183;
+  --bs-body-bg: #1a1a1a;
+  --bs-body-color: #e0e0e0;
+  --bs-border-color: #404040;
 }
 
-/* ======================================
-   Global Styles / Reset
-====================================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ======================================
-   Base Typography
-====================================== */
-body {
-  /* font-family: var(--font-quran); */
-  font-family: var(--font-arabic);
-  font-weight: 500;
-  font-style: normal;
-  line-height: 1.6;
-  padding: var(--padding-body);
+[data-theme='dark'] body {
   background-color: var(--bg-body);
+  color: var(--text-color);
 }
 
-/* Apply Arabic font to form elements */
-select,
-option,
-label,
-button {
-  font-family: var(--font-arabic);
-  font-size: var(--font-size-base);
-  direction: rtl;
-  overflow-wrap: break-word;
-  cursor: pointer;
+[data-theme='dark'] .card {
+  background-color: var(--bg-container);
+  border-color: var(--border-color);
+  color: var(--text-color);
 }
 
-/* ======================================
-   Utility Classes
-====================================== */
-
-/* Hides an element regardless of its display value */
-.hidden {
-  display: none !important;
+[data-theme='dark'] .form-select,
+[data-theme='dark'] .form-control {
+  background-color: var(--bg-container);
+  border-color: var(--border-color);
+  color: var(--text-color);
 }
 
-/* Indicates an active state for toggled elements */
-.active {
-  background: var(--active-color);
+[data-theme='dark'] .form-select:focus,
+[data-theme='dark'] .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(78, 115, 138, 0.25);
 }
 
-.active:hover {
-  background: var(--active-color-hover);
+[data-theme='dark'] .btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
-/* Visible for screen readers only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+[data-theme='dark'] .btn-primary:hover,
+[data-theme='dark'] .btn-primary:focus {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
-/* ======================================
-   Layout & Components
-====================================== */
-
-/* Container for the entire application */
-.container {
-  margin: 0 auto;
-  background: var(--bg-container);
-  padding: var(--padding-container);
-  border-radius: var(--border-radius-container);
-  box-shadow: var(--box-shadow-container);
+[data-theme='dark'] .btn-primary.active {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
 }
 
-/* Controls section (dropdowns, etc.) */
-.controls {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
+[data-theme='dark'] .btn-primary.active:hover {
+  background-color: var(--active-color-hover);
+  border-color: var(--active-color-hover);
 }
 
-.logo {
-  width: 250px;
+[data-theme='dark'] .btn-primary:disabled {
+  background-color: var(--disabled-color);
+  border-color: var(--disabled-color);
 }
 
-/* Styling for dropdown selects */
-select {
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border-color);
-  flex: 1;
-  width: auto;
-  min-width: 150px;
+[data-theme='dark'] .btn-success {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
 }
 
-/* Prevent text wrapping in dropdown options */
-select option {
-  white-space: nowrap;
+[data-theme='dark'] .btn-success:hover,
+[data-theme='dark'] .btn-success:focus {
+  background-color: var(--active-color-hover);
+  border-color: var(--active-color-hover);
 }
 
-/* Audio controls container */
-.audio-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
-  flex-wrap: wrap;
+[data-theme='dark'] .btn-success.active {
+  background-color: var(--active-color);
+  border-color: var(--active-color);
 }
 
-/* Button styling */
-button {
-  padding: 8px 12px;
-  text-align: center;
-  border: none;
-  border-radius: 4px;
-  background: var(--primary-color);
+[data-theme='dark'] .btn-success.active:hover {
+  background-color: var(--active-color-hover);
+  border-color: var(--active-color-hover);
+}
+
+[data-theme='dark'] .btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+[data-theme='dark'] .btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: white;
-  cursor: pointer;
-  transition: background 0.3s;
 }
 
-button:hover {
-  background: var(--primary-hover);
+[data-theme='dark'] .card.bg-light {
+  background-color: var(--playback-bg) !important;
 }
 
-button:disabled {
-  background: var(--disabled-color);
-  cursor: not-allowed;
+[data-theme='dark'] .verse-container {
+  background-color: var(--verse-bg);
 }
 
-/* Quran text display area */
-.quran-text {
-  text-align: center;
-  margin: 20px 0;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+[data-theme='dark'] .logo-img {
+  content: url('../imgs/Al-Munir-white.png');
 }
 
-#quranContent {
+[data-theme='dark'] .alert-warning {
+  background-color: #4a3f1a;
+  border-color: #5a4f2a;
+  color: #ffc107;
+}
+
+[data-theme='dark'] .text-muted {
+  color: var(--edition-label-color) !important;
+}
+
+[data-theme='dark'] .modal-content {
+  background-color: var(--bg-container);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+[data-theme='dark'] .modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme='dark'] .btn-close {
+  filter: invert(1);
+}
+
+.logo-img {
+  width: 250px;
+  max-width: 100%;
+}
+
+.quran-text .arabic {
   font-family: var(--font-quran);
-}
-
-/* Container for a single verse */
-.verse-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px;
-  background: var(--verse-bg);
-  border-radius: 8px;
-}
-
-/* Arabic text styling */
-.arabic {
   font-size: var(--quran-font-size);
   line-height: 2;
-  direction: rtl;
-  padding: 15px 10px;
-  background: var(--bg-container);
-  border-radius: 4px;
-  color: #000000; /* Default black for light mode */
+  color: #000000;
 }
 
-/* Dark Mode - Arabic text (Quran verses) */
-[data-theme="dark"] .arabic {
-  color: #ffffff; /* White for dark mode */
+[data-theme='dark'] .quran-text .arabic {
+  color: #ffffff;
 }
 
-/* Translation text styling */
-.translation {
+.quran-text .translation {
   font-size: var(--translation-font-size);
-  color: var(--text-color);
-  padding: 10px;
-  background: var(--bg-container);
-  border-radius: 4px;
   line-height: 1.6;
 }
 
-/* Edition label (e.g., for translation edition) */
 .edition-label {
   font-size: 0.9em;
-  color: var(--edition-label-color);
-  margin-bottom: 5px;
+  color: #888;
 }
 
-/* Loading indicator styling */
-.loader-container {
-  direction: rtl;
-  text-align: center;
-  padding: 20px;
-  color: var(--text-color);
+[data-theme='dark'] .edition-label {
+  color: #b0b0b0;
 }
+
+.verse-container {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+}
+
+.site-description h2 {
+  margin-bottom: 1rem;
+}
+
+.site-description p {
+  margin-bottom: 1rem;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1050;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .theme-toggle {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .loader {
   margin: 0 auto;
-  margin-bottom: 10px;
-  border: 10px solid var(--playback-bg);
+  border: 10px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 10px solid var(--primary-color);
+  border-top: 10px solid #395364;
   width: 65px;
   height: 65px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
 }
 
 @keyframes spin {
@@ -289,210 +388,53 @@ button:disabled {
   }
 }
 
-/* Error message styling */
-.error {
-  color: red;
-  text-align: center;
-  padding: 10px;
+[data-theme='dark'] .similar-site-link {
+  color: var(--active-color);
 }
 
-[data-theme="dark"] .error {
-  color: #ff6b6b;
+[data-theme='dark'] .similar-site-link:hover {
+  color: var(--active-color-hover);
 }
 
-/* Meta information display (e.g., surah and ayah info) */
-.meta-info {
-  text-align: center;
-  color: var(--text-color);
-  margin-bottom: 10px;
+.alert-link {
+  color: var(--primary-color);
+  font-weight: 700;
 }
 
-/* Audio element styling */
-audio {
-  width: 60%;
+.alert-link:hover {
+  color: var(--primary-hover);
 }
 
-/* Playback controls container */
-.playback-controls {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 10px;
-  margin: 20px 0;
-  padding: 15px;
-  background: var(--playback-bg);
-  border-radius: 4px;
-  flex-wrap: wrap;
-  justify-content: center;
+.similar-section-title {
+  color: var(--primary-color);
 }
 
-/* Range selection controls */
-.range-controls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-  padding: 10px;
-  background: var(--playback-bg);
-  border-radius: 4px;
-  direction: rtl;
+[data-theme='dark'] .similar-section-title {
+  color: var(--active-color);
 }
-
-/* Input fields within range controls */
-.range-controls input {
-  width: 60px;
-  padding: 4px;
-  background: var(--bg-container);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
-
-/* Select dropdowns in dark mode */
-[data-theme="dark"] select {
-  background: var(--bg-container);
-  color: var(--text-color);
-}
-
-[data-theme="dark"] select option {
-  background: var(--bg-container);
-  color: var(--text-color);
-}
-
-/* Container for navigation buttons to go to the first and last ayah */
-.ayah-navigation-control {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  margin: 15px 0;
-}
-
-/* Site Description Styles */
-.site-description {
-  direction: rtl;
-  font-family: var(--font-arabic);
-  font-size: var(--font-size-base);
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.site-description p {
-  margin-bottom: 10px;
-  font-size: 1.6em;
-}
-
-/* Dark Mode - Site Description Text */
-[data-theme="dark"] .site-description,
-[data-theme="dark"] .site-description h2,
-[data-theme="dark"] .site-description p {
-  color: #ffffff;
-}
-
-/* Dark Mode - Logo Image */
-/* Logo image is changed via JavaScript to Al-Munir-white.png in dark mode */
-
-/* Dark Mode Toggle Button */
-.theme-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  padding: 10px 15px;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border: 2px solid var(--border-color);
-  background: var(--bg-container);
-  color: var(--text-color);
-  box-shadow: var(--box-shadow-container);
-  transition: all 0.3s ease;
-}
-
-.theme-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-[data-theme="dark"] .theme-toggle {
-  border-color: var(--border-color);
-}
-
-/* Domain name warning */
-.domain-warning {
-  background-color: #fff3cd;
-  color: #856404;
-  text-align: center;
-  padding: 10px;
-  font-size: 1.2em;
-  font-weight: bold;
-  border: 1px solid #ffeeba;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-
 
 @media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    left: 10px;
-    width: 45px;
-    height: 45px;
-    font-size: 20px;
-  }
-}
-
-/* 
-======================================
-   Responsive Design
-====================================== */
-
-@media (max-width: 768px) {
-  :root {
-    --font-size-base: 18px;
-    --quran-font-size: 30px;
-    --translation-font-size: 20px;
-  }
-
-  body {
-    padding: 0px;
-  }
-
-  .container {
-    padding: 10px;
-    border-radius: 0px;
-  }
-
-  .controls,
-  .playback-controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-
-  .logo {
+  .logo-img {
     width: 180px;
   }
 
-  select {
-    width: 100%;
+  .quran-text .arabic {
+    font-size: 30px;
   }
 
-  button {
-    padding: 8px;
-  }
-
-  audio {
-    width: 100%;
+  .quran-text .translation {
+    font-size: 20px;
   }
 
   .site-description p {
-    margin-bottom: 10px;
-    font-size: 1.5em;
+    font-size: 1.2rem;
+  }
+
+  .theme-toggle {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    top: 10px;
+    left: 10px;
   }
 }
