@@ -1,12 +1,12 @@
 // API BASE URL
-const API_BASE = "https://api.alquran.cloud/v1";
+const API_BASE = 'https://api.alquran.cloud/v1';
 
 // Constants and state management
 const state = {
-  currentSurah: "selectSurah",
+  currentSurah: 'selectSurah',
   currentAyah: null,
-  currentEdition: "selectTafsir",
-  currentAudioEdition: "selectAudio",
+  currentEdition: 'selectTafsir',
+  currentAudioEdition: 'selectAudio',
   autoplayEnabled: false,
   loopEnabled: false,
   rangeModeEnabled: false,
@@ -17,58 +17,58 @@ const state = {
 
 // Cache DOM elements using jQuery
 const elements = {
-  surahSelect: $("#surahSelect"),
-  editionSelect: $("#editionSelect"),
-  audioEditionSelect: $("#audioEditionSelect"),
-  loading: $("#loading"),
-  error: $("#error"),
-  arabicText: $("#arabicText"),
-  translationText: $("#translationText"),
-  surahInfo: $("#surahInfo"),
-  ayahInfo: $("#ayahInfo"),
-  quranAudio: $("#quranAudio"),
-  prevAyah: $("#prevAyah"),
-  nextAyah: $("#nextAyah"),
-  toggleAutoplay: $("#toggleAutoplay"),
-  toggleLoop: $("#toggleLoop"),
-  toggleRangeMode: $("#toggleRangeMode"),
-  rangeControls: $("#rangeControls"),
-  rangeStart: $("#rangeStart"),
-  rangeEnd: $("#rangeEnd"),
-  setRange: $("#setRange"),
-  goToFirstAyah: $("#goToFirstAyah"),
-  goToLastAyah: $("#goToLastAyah"),
-  quranContent: $("#quranContent"),
+  surahSelect: $('#surahSelect'),
+  editionSelect: $('#editionSelect'),
+  audioEditionSelect: $('#audioEditionSelect'),
+  loading: $('#loading'),
+  error: $('#error'),
+  arabicText: $('#arabicText'),
+  translationText: $('#translationText'),
+  surahInfo: $('#surahInfo'),
+  ayahInfo: $('#ayahInfo'),
+  quranAudio: $('#quranAudio'),
+  prevAyah: $('#prevAyah'),
+  nextAyah: $('#nextAyah'),
+  toggleAutoplay: $('#toggleAutoplay'),
+  toggleLoop: $('#toggleLoop'),
+  toggleRangeMode: $('#toggleRangeMode'),
+  rangeControls: $('#rangeControls'),
+  rangeStart: $('#rangeStart'),
+  rangeEnd: $('#rangeEnd'),
+  setRange: $('#setRange'),
+  goToFirstAyah: $('#goToFirstAyah'),
+  goToLastAyah: $('#goToLastAyah'),
+  quranContent: $('#quranContent'),
 };
 
 // Define allowed identifiers for both text and audio
 const allowedIdentifiers = {
   text: [
-    "ar.baghawi",
-    "ar.jalalayn",
-    "ar.miqbas",
-    "ar.muyassar",
-    "ar.qurtubi",
-    "ar.waseet",
-    "quran-uthmani",
+    'ar.baghawi',
+    'ar.jalalayn',
+    'ar.miqbas',
+    'ar.muyassar',
+    'ar.qurtubi',
+    'ar.waseet',
+    'quran-uthmani',
   ],
   audio: [
-    "ar.abdullahbasfar",
-    "ar.abdulsamad",
-    "ar.abdurrahmaansudais",
-    "ar.ahmedajamy",
-    "ar.alafasy",
-    "ar.aymanswoaid",
-    "ar.hanirifai",
-    "ar.hudhaify",
-    "ar.husary",
-    "ar.husarymujawwad",
-    "ar.ibrahimakhbar",
-    "ar.mahermuaiqly",
-    "ar.muhammadayyoub",
-    "ar.muhammadjibreel",
-    "ar.saoodshuraym",
-    "ar.shaatree",
+    'ar.abdullahbasfar',
+    'ar.abdulsamad',
+    'ar.abdurrahmaansudais',
+    'ar.ahmedajamy',
+    'ar.alafasy',
+    'ar.aymanswoaid',
+    'ar.hanirifai',
+    'ar.hudhaify',
+    'ar.husary',
+    'ar.husarymujawwad',
+    'ar.ibrahimakhbar',
+    'ar.mahermuaiqly',
+    'ar.muhammadayyoub',
+    'ar.muhammadjibreel',
+    'ar.saoodshuraym',
+    'ar.shaatree',
   ],
 };
 
@@ -77,8 +77,8 @@ const allowedIdentifiers = {
  * @param {boolean} show - Whether to show loading.
  */
 function showLoading(show) {
-  elements.loading.css("display", show ? "block" : "none");
-  if (show) elements.error.css("display", "none");
+  elements.loading.css('display', show ? 'block' : 'none');
+  if (show) elements.error.css('display', 'none');
 }
 
 /**
@@ -86,8 +86,8 @@ function showLoading(show) {
  * @param {string} message - The error message.
  */
 function showError(message) {
-  elements.error.text(message).css("display", "block");
-  elements.loading.css("display", "none");
+  elements.error.text(message).css('display', 'block');
+  elements.loading.css('display', 'none');
 }
 
 /**
@@ -98,8 +98,8 @@ function showError(message) {
  */
 function updateToggleButton($button, label, isActive) {
   $button
-    .text(`${label}: ${isActive ? "On" : "Off"}`)
-    .toggleClass("active", isActive);
+    .text(`${label}: ${isActive ? 'On' : 'Off'}`)
+    .toggleClass('active', isActive);
 }
 
 /**
@@ -110,12 +110,12 @@ async function fetchApi(endpoint) {
   try {
     const response = await $.ajax({
       url: `${API_BASE}${endpoint}`,
-      type: "GET",
-      dataType: "json",
+      type: 'GET',
+      dataType: 'json',
     });
     return response;
   } catch (error) {
-    showError(error.message || "Network error occurred");
+    showError(error.message || 'Network error occurred');
     throw error;
   }
 }
@@ -126,16 +126,16 @@ async function fetchApi(endpoint) {
 async function loadSurahs() {
   showLoading(true);
   try {
-    const response = await fetchApi("/surah");
+    const response = await fetchApi('/surah');
     $.each(response.data, function (i, surah) {
       elements.surahSelect.append(
-        $("<option>")
+        $('<option>')
           .val(surah.number)
-          .text(`${surah.number}. ${surah.englishName} (${surah.name})`)
+          .text(`${surah.number}. ${surah.englishName} (${surah.name})`),
       );
     });
   } catch (error) {
-    showError("فشل في تحميل السورة");
+    showError('فشل في تحميل السورة');
   }
   showLoading(false);
 }
@@ -146,21 +146,21 @@ async function loadSurahs() {
 async function loadTextEditions() {
   showLoading(true);
   try {
-    const textEditions = await fetchApi("/edition?format=text");
+    const textEditions = await fetchApi('/edition?format=text');
 
     // Filter and add text editions by allowed identifiers
     $.each(textEditions.data, function (i, edition) {
       if (
         allowedIdentifiers.text.includes(edition.identifier) &&
-        edition.identifier !== "quran-uthmani"
+        edition.identifier !== 'quran-uthmani'
       ) {
         elements.editionSelect.append(
-          $("<option>").val(edition.identifier).text(edition.name)
+          $('<option>').val(edition.identifier).text(edition.name),
         );
       }
     });
   } catch (error) {
-    showError("فشل في تحميل التفاسير");
+    showError('فشل في تحميل التفاسير');
   }
   showLoading(false);
 }
@@ -172,19 +172,19 @@ async function loadAudioEditions() {
   showLoading(true);
   try {
     const audioEditions = await fetchApi(
-      "/edition?format=audio&type=versebyverse"
+      '/edition?format=audio&type=versebyverse',
     );
 
     // Filter and add audio editions by allowed identifiers
     $.each(audioEditions.data, function (i, edition) {
       if (allowedIdentifiers.audio.includes(edition.identifier)) {
         elements.audioEditionSelect.append(
-          $("<option>").val(edition.identifier).text(edition.name)
+          $('<option>').val(edition.identifier).text(edition.name),
         );
       }
     });
   } catch (error) {
-    showError("فشل في تحميل التلاوات");
+    showError('فشل في تحميل التلاوات');
   }
   showLoading(false);
 }
@@ -198,24 +198,24 @@ async function loadAudioEditions() {
 async function loadAyah(
   surahNumber,
   ayahNumber,
-  edition = state.currentEdition
+  edition = state.currentEdition,
 ) {
-  if (state.currentSurah && state.currentSurah !== "selectSurah") {
+  if (state.currentSurah && state.currentSurah !== 'selectSurah') {
     showLoading(true);
     try {
       // Fetch original Arabic text.
       const arabicResponse = await fetchApi(
-        `/ayah/${surahNumber}:${ayahNumber}/quran-uthmani`
+        `/ayah/${surahNumber}:${ayahNumber}/quran-uthmani`,
       );
       const arabicAyah = arabicResponse.data;
       const arabicAyahText = arabicAyah.text;
 
       // Fetch translation if applicable.
-      let translationText = "";
-      let translationEdition = "";
-      if (edition && edition !== "selectTafsir") {
+      let translationText = '';
+      let translationEdition = '';
+      if (edition && edition !== 'selectTafsir') {
         const translationResponse = await fetchApi(
-          `/ayah/${surahNumber}:${ayahNumber}/${edition}`
+          `/ayah/${surahNumber}:${ayahNumber}/${edition}`,
         );
         translationText = translationResponse.data.text;
         translationEdition = translationResponse.data.edition.name;
@@ -229,32 +229,32 @@ async function loadAyah(
           translationText
             ? `<div class="edition-label">${translationEdition}</div>
                <div class="translation">${translationText}</div>`
-            : ""
+            : ''
         }
       </div>
     `);
 
       elements.surahInfo.text(
-        `Surah ${arabicAyah.surah.englishName} (${arabicAyah.surah.name})`
+        `Surah ${arabicAyah.surah.englishName} (${arabicAyah.surah.name})`,
       );
       elements.ayahInfo.text(
-        `الأية ${arabicAyah.numberInSurah} من ${arabicAyah.surah.numberOfAyahs}`
+        `الأية ${arabicAyah.numberInSurah} من ${arabicAyah.surah.numberOfAyahs}`,
       );
 
       state.totalAyahs = arabicAyah.surah.numberOfAyahs;
 
-      elements.rangeStart.off("input").on("input", validateRangeInput);
-      elements.rangeEnd.off("input").on("input", validateRangeInput);
+      elements.rangeStart.off('input').on('input', validateRangeInput);
+      elements.rangeEnd.off('input').on('input', validateRangeInput);
 
       // Load audio if an audio edition is selected.
       if (
         state.currentAudioEdition &&
-        state.currentAudioEdition !== "selectAudio"
+        state.currentAudioEdition !== 'selectAudio'
       ) {
         const audioResponse = await fetchApi(
-          `/ayah/${surahNumber}:${ayahNumber}/${state.currentAudioEdition}`
+          `/ayah/${surahNumber}:${ayahNumber}/${state.currentAudioEdition}`,
         );
-        elements.quranAudio.attr("src", audioResponse.data.audio);
+        elements.quranAudio.attr('src', audioResponse.data.audio);
         if (state.autoplayEnabled) {
           elements.quranAudio[0].play();
         }
@@ -262,7 +262,7 @@ async function loadAyah(
 
       updateNavigationButtons(
         arabicAyah.numberInSurah,
-        arabicAyah.surah.numberOfAyahs
+        arabicAyah.surah.numberOfAyahs,
       );
 
       // Update state and save.
@@ -270,7 +270,7 @@ async function loadAyah(
       state.currentAyah = ayahNumber;
       saveState();
     } catch (error) {
-      showError("فشل في تحميل الأية");
+      showError('فشل في تحميل الأية');
     }
     showLoading(false);
   }
@@ -280,16 +280,16 @@ async function loadAyah(
  * Toggles option selects based on Surah selection
  */
 function toggleOptionsBasedOnSurah() {
-  const isSelected = state.currentSurah === "selectSurah";
+  const isSelected = state.currentSurah === 'selectSurah';
 
-  elements.editionSelect.prop("disabled", isSelected);
-  elements.audioEditionSelect.prop("disabled", isSelected);
-  elements.rangeControls.toggleClass("hidden", isSelected);
+  elements.editionSelect.prop('disabled', isSelected);
+  elements.audioEditionSelect.prop('disabled', isSelected);
+  elements.rangeControls.toggleClass('hidden', isSelected);
 
-  elements.editionSelect.css("cursor", isSelected ? "not-allowed" : "pointer");
+  elements.editionSelect.css('cursor', isSelected ? 'not-allowed' : 'pointer');
   elements.audioEditionSelect.css(
-    "cursor",
-    isSelected ? "not-allowed" : "pointer"
+    'cursor',
+    isSelected ? 'not-allowed' : 'pointer',
   );
 
   updateControlsVisibility();
@@ -316,11 +316,11 @@ function validateRangeInput(event) {
  */
 function updateNavigationButtons(currentNumber, totalNumber) {
   if (state.rangeModeEnabled) {
-    elements.prevAyah.prop("disabled", currentNumber <= state.rangeStart);
-    elements.nextAyah.prop("disabled", currentNumber >= state.rangeEnd);
+    elements.prevAyah.prop('disabled', currentNumber <= state.rangeStart);
+    elements.nextAyah.prop('disabled', currentNumber >= state.rangeEnd);
   } else {
-    elements.prevAyah.prop("disabled", currentNumber === 1);
-    elements.nextAyah.prop("disabled", currentNumber === totalNumber);
+    elements.prevAyah.prop('disabled', currentNumber === 1);
+    elements.nextAyah.prop('disabled', currentNumber === totalNumber);
   }
 }
 
@@ -328,28 +328,28 @@ function updateNavigationButtons(currentNumber, totalNumber) {
  * Update the visibility of audio and control elements.
  */
 function updateControlsVisibility() {
-  const surahSelected = elements.surahSelect.val() !== "selectSurah";
+  const surahSelected = elements.surahSelect.val() !== 'selectSurah';
   const audioEditionSelected =
-    elements.audioEditionSelect.val() !== "selectAudio";
+    elements.audioEditionSelect.val() !== 'selectAudio';
 
   elements.quranAudio.toggleClass(
-    "hidden",
-    !(surahSelected && audioEditionSelected)
+    'hidden',
+    !(surahSelected && audioEditionSelected),
   );
-  elements.prevAyah.toggleClass("hidden", !surahSelected);
-  elements.nextAyah.toggleClass("hidden", !surahSelected);
-  elements.quranContent.toggleClass("hidden", !surahSelected);
+  elements.prevAyah.toggleClass('hidden', !surahSelected);
+  elements.nextAyah.toggleClass('hidden', !surahSelected);
+  elements.quranContent.toggleClass('hidden', !surahSelected);
   elements.toggleAutoplay.toggleClass(
-    "hidden",
-    !(surahSelected && audioEditionSelected)
+    'hidden',
+    !(surahSelected && audioEditionSelected),
   );
   elements.toggleLoop.toggleClass(
-    "hidden",
-    !(surahSelected && audioEditionSelected)
+    'hidden',
+    !(surahSelected && audioEditionSelected),
   );
-  elements.toggleRangeMode.toggleClass("hidden", !surahSelected);
-  elements.goToFirstAyah.toggleClass("hidden", !surahSelected);
-  elements.goToLastAyah.toggleClass("hidden", !surahSelected);
+  elements.toggleRangeMode.toggleClass('hidden', !surahSelected);
+  elements.goToFirstAyah.toggleClass('hidden', !surahSelected);
+  elements.goToLastAyah.toggleClass('hidden', !surahSelected);
 }
 
 /**
@@ -375,14 +375,14 @@ function handleAudioEnd() {
  * Save the current state to localStorage.
  */
 function saveState() {
-  localStorage.setItem("Al-Munir_State", JSON.stringify(state));
+  localStorage.setItem('Al-Munir_State', JSON.stringify(state));
 }
 
 /**
  * Load the saved state from localStorage.
  */
 function loadState() {
-  const savedState = localStorage.getItem("Al-Munir_State");
+  const savedState = localStorage.getItem('Al-Munir_State');
   if (savedState) {
     try {
       Object.assign(state, JSON.parse(savedState));
@@ -394,33 +394,33 @@ function loadState() {
 
       updateToggleButton(
         elements.toggleAutoplay,
-        "التشغيل التلقائي للأيات",
-        state.autoplayEnabled
+        'التشغيل التلقائي للأيات',
+        state.autoplayEnabled,
       );
       updateToggleButton(
         elements.toggleLoop,
-        "تكرار الأية الحالية",
-        state.loopEnabled
+        'تكرار الأية الحالية',
+        state.loopEnabled,
       );
       updateToggleButton(
         elements.toggleRangeMode,
-        "تحديد مجال الأيات",
-        state.rangeModeEnabled
+        'تحديد مجال الأيات',
+        state.rangeModeEnabled,
       );
 
       elements.rangeStart.val(state.rangeStart);
       elements.rangeEnd.val(state.rangeEnd);
 
       elements.rangeControls.css(
-        "display",
-        state.rangeModeEnabled ? "flex" : "none"
+        'display',
+        state.rangeModeEnabled ? 'flex' : 'none',
       );
 
       if (state.currentSurah && state.currentAyah) {
         loadAyah(state.currentSurah, state.currentAyah, state.currentEdition);
       }
     } catch (error) {
-      showError("فشل تحميل الحالة المحفوظة");
+      showError('فشل تحميل الحالة المحفوظة');
     }
   }
   toggleOptionsBasedOnSurah();
@@ -430,38 +430,38 @@ function loadState() {
  * Sets up all event listeners for the application
  */
 function setupEventListeners() {
-  elements.quranAudio.on("ended", handleAudioEnd);
+  elements.quranAudio.on('ended', handleAudioEnd);
 
-  elements.toggleAutoplay.on("click", function () {
+  elements.toggleAutoplay.on('click', function () {
     state.autoplayEnabled = !state.autoplayEnabled;
     updateToggleButton(
       elements.toggleAutoplay,
-      "التشغيل التلقائي للأيات",
-      state.autoplayEnabled
+      'التشغيل التلقائي للأيات',
+      state.autoplayEnabled,
     );
     saveState();
   });
 
-  elements.toggleLoop.on("click", function () {
+  elements.toggleLoop.on('click', function () {
     state.loopEnabled = !state.loopEnabled;
     updateToggleButton(
       elements.toggleLoop,
-      "تكرار الأية الحالية",
-      state.loopEnabled
+      'تكرار الأية الحالية',
+      state.loopEnabled,
     );
     saveState();
   });
 
-  elements.toggleRangeMode.on("click", function () {
+  elements.toggleRangeMode.on('click', function () {
     state.rangeModeEnabled = !state.rangeModeEnabled;
     updateToggleButton(
       elements.toggleRangeMode,
-      "تحديد مجال الأيات",
-      state.rangeModeEnabled
+      'تحديد مجال الأيات',
+      state.rangeModeEnabled,
     );
     elements.rangeControls.css(
-      "display",
-      state.rangeModeEnabled ? "flex" : "none"
+      'display',
+      state.rangeModeEnabled ? 'flex' : 'none',
     );
 
     if (state.rangeModeEnabled) {
@@ -475,7 +475,7 @@ function setupEventListeners() {
     saveState();
   });
 
-  elements.setRange.on("click", function () {
+  elements.setRange.on('click', function () {
     state.rangeStart = parseInt(elements.rangeStart.val());
     state.rangeEnd = parseInt(elements.rangeEnd.val());
 
@@ -497,14 +497,14 @@ function setupEventListeners() {
     saveState();
   });
 
-  elements.goToFirstAyah.on("click", function () {
+  elements.goToFirstAyah.on('click', function () {
     if (state.currentSurah) {
       const ayahToLoad = state.rangeModeEnabled ? state.rangeStart : 1;
       loadAyah(state.currentSurah, ayahToLoad);
     }
   });
 
-  elements.goToLastAyah.on("click", function () {
+  elements.goToLastAyah.on('click', function () {
     if (state.currentSurah) {
       const ayahToLoad = state.rangeModeEnabled
         ? state.rangeEnd
@@ -513,23 +513,23 @@ function setupEventListeners() {
     }
   });
 
-  elements.prevAyah.on("click", function () {
+  elements.prevAyah.on('click', function () {
     const minAyah = state.rangeModeEnabled ? state.rangeStart : 1;
     if (state.currentAyah > minAyah) {
       loadAyah(state.currentSurah, state.currentAyah - 1);
     }
   });
 
-  elements.nextAyah.on("click", function () {
+  elements.nextAyah.on('click', function () {
     const maxAyah = state.rangeModeEnabled ? state.rangeEnd : state.totalAyahs;
     if (state.currentAyah < maxAyah) {
       loadAyah(state.currentSurah, state.currentAyah + 1);
     }
   });
 
-  elements.surahSelect.on("change", function () {
+  elements.surahSelect.on('change', function () {
     const selectedValue = $(this).val();
-    if (selectedValue && selectedValue !== "selectSurah") {
+    if (selectedValue && selectedValue !== 'selectSurah') {
       state.currentSurah = parseInt(selectedValue);
       state.currentAyah = 1;
       loadAyah(state.currentSurah, state.currentAyah).then(() => {
@@ -541,7 +541,7 @@ function setupEventListeners() {
         }
       });
     } else {
-      state.currentSurah = "selectSurah";
+      state.currentSurah = 'selectSurah';
       state.currentAyah = null;
       elements.quranAudio[0].pause();
       elements.quranAudio[0].currentTime = 0;
@@ -550,24 +550,24 @@ function setupEventListeners() {
     saveState();
   });
 
-  elements.editionSelect.on("change", function () {
+  elements.editionSelect.on('change', function () {
     const selectedValue = $(this).val();
     if (selectedValue) {
       state.currentEdition = selectedValue;
       loadAyah(state.currentSurah, state.currentAyah);
     } else {
-      state.currentEdition = "selectTafsir";
+      state.currentEdition = 'selectTafsir';
     }
     saveState();
   });
 
-  elements.audioEditionSelect.on("change", function () {
+  elements.audioEditionSelect.on('change', function () {
     const selectedValue = $(this).val();
     if (selectedValue) {
       state.currentAudioEdition = selectedValue;
       loadAyah(state.currentSurah, state.currentAyah);
     } else {
-      state.currentAudioEdition = "selectAudio";
+      state.currentAudioEdition = 'selectAudio';
     }
     updateControlsVisibility();
     saveState();
@@ -584,6 +584,15 @@ async function init() {
   loadState();
   toggleOptionsBasedOnSurah();
 }
+
+// Hide domain warning on Netlify domain
+$(function () {
+  const hostname = window.location.hostname;
+
+  if (hostname === 'almunir.netlify.app') {
+    $('.domain-warning').hide();
+  }
+});
 
 // jQuery document ready function
 $(document).ready(function () {
