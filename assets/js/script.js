@@ -563,6 +563,16 @@ function loadState() {
 function setupEventListeners() {
   elements.quranAudio.on('ended', handleAudioEnd);
 
+  // Click on Arabic text to toggle play/pause audio
+  elements.arabicText.on('click', function () {
+    const audio = elements.quranAudio[0];
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  });
+
   elements.toggleAutoplay.on('click', function () {
     state.autoplayEnabled = !state.autoplayEnabled;
     updateToggleButton(

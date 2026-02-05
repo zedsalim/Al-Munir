@@ -315,10 +315,22 @@ select:disabled {
   font-size: var(--quran-font-size);
   line-height: 2;
   color: #000000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.quran-text .arabic:hover {
+  color: var(--primary-color);
+  transform: scale(1.02);
 }
 
 [data-theme='dark'] .quran-text .arabic {
   color: #ffffff;
+}
+
+[data-theme='dark'] .quran-text .arabic:hover {
+  color: var(--active-color);
 }
 
 .quran-text .translation {
