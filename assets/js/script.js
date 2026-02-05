@@ -111,6 +111,7 @@ const state = {
   currentAudioEdition: 'selectAudio',
   autoplayEnabled: false,
   loopEnabled: false,
+  surahLoopEnabled: false,
   rangeModeEnabled: false,
   rangeStart: 1,
   rangeEnd: 1,
@@ -132,6 +133,7 @@ const elements = {
   nextAyah: $('#nextAyah'),
   toggleAutoplay: $('#toggleAutoplay'),
   toggleLoop: $('#toggleLoop'),
+  toggleSurahLoop: $('#toggleSurahLoop'),
   toggleRangeMode: $('#toggleRangeMode'),
   rangeControls: $('#rangeControls'),
   rangeStart: $('#rangeStart'),
@@ -471,11 +473,25 @@ function handleAudioEnd() {
     if (state.rangeModeEnabled) {
       if (state.currentAyah < state.rangeEnd) {
         loadAyah(state.currentSurah, state.currentAyah + 1);
-      } else if (state.loopEnabled) {
+      } else if (state.surahLoopEnabled) {
         loadAyah(state.currentSurah, state.rangeStart);
       }
-    } else if (state.currentAyah < state.totalAyahs) {
-      loadAyah(state.currentSurah, state.currentAyah + 1);
+    } else {
+      if (state.currentAyah < state.totalAyahs) {
+        loadAyah(state.currentSurah, state.currentAyah + 1);
+      } else if (state.surahLoopEnabled) {
+        loadAyah(state.currentSurah, 1);
+      }
+    }
+  } else if (state.surahLoopEnabled && !state.loopEnabled) {
+    if (state.rangeModeEnabled) {
+      if (state.currentAyah >= state.rangeEnd) {
+        loadAyah(state.currentSurah, state.rangeStart);
+      }
+    } else {
+      if (state.currentAyah >= state.totalAyahs) {
+        loadAyah(state.currentSurah, 1);
+      }
     }
   }
 }
@@ -510,6 +526,11 @@ function loadState() {
         elements.toggleLoop,
         'تكرار الأية الحالية',
         state.loopEnabled,
+      );
+      updateToggleButton(
+        elements.toggleSurahLoop,
+        'تكرار السورة/المجال',
+        state.surahLoopEnabled,
       );
       updateToggleButton(
         elements.toggleRangeMode,
@@ -558,6 +579,16 @@ function setupEventListeners() {
       elements.toggleLoop,
       'تكرار الأية الحالية',
       state.loopEnabled,
+    );
+    saveState();
+  });
+
+  elements.toggleSurahLoop.on('click', function () {
+    state.surahLoopEnabled = !state.surahLoopEnabled;
+    updateToggleButton(
+      elements.toggleSurahLoop,
+      'تكرار السورة/المجال',
+      state.surahLoopEnabled,
     );
     saveState();
   });
