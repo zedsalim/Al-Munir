@@ -565,6 +565,10 @@ function setupEventListeners() {
 
   // Click on Arabic text to toggle play/pause audio
   elements.arabicText.on('click', function () {
+    if (state.currentAudioEdition === 'selectAudio') {
+      return;
+    }
+
     const audio = elements.quranAudio[0];
     if (audio.paused) {
       audio.play();
