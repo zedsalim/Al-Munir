@@ -321,16 +321,11 @@ select:disabled {
 }
 
 .quran-text .arabic:hover {
-  color: var(--primary-color);
   transform: scale(1.02);
 }
 
 [data-theme='dark'] .quran-text .arabic {
   color: #ffffff;
-}
-
-[data-theme='dark'] .quran-text .arabic:hover {
-  color: var(--active-color);
 }
 
 .quran-text .translation {
