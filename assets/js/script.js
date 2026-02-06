@@ -447,12 +447,13 @@ function updateControlsVisibility() {
 
   if (surahSelected) {
     elements.quranContent.removeClass('d-none');
-    elements.playbackControlsSection.removeClass('d-none');
     elements.ayahNavigationSection.removeClass('d-none');
 
     if (audioEditionSelected) {
+      elements.playbackControlsSection.removeClass('d-none');
       elements.audioControlsSection.removeClass('d-none');
     } else {
+      elements.playbackControlsSection.addClass('d-none');
       elements.audioControlsSection.addClass('d-none');
     }
   } else {
