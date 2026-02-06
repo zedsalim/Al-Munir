@@ -718,11 +718,16 @@ function setupEventListeners() {
 
   elements.audioEditionSelect.on('change', function () {
     const selectedValue = $(this).val();
-    if (selectedValue) {
+    if (selectedValue && selectedValue !== 'selectAudio') {
       state.currentAudioEdition = selectedValue;
       loadAyah(state.currentSurah, state.currentAyah);
     } else {
       state.currentAudioEdition = 'selectAudio';
+      // Stop and reset audio when reciter is deselected
+      const audio = elements.quranAudio[0];
+      audio.pause();
+      audio.currentTime = 0;
+      audio.removeAttribute('src');
     }
     updateControlsVisibility();
     saveState();
